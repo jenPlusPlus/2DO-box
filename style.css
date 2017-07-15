@@ -1,0 +1,61 @@
+* {
+  margin: 0;
+}
+
+main {
+  display: flex;
+  height: 100%;
+}
+
+
+h1{
+  margin-top: -10px;
+  margin-bottom: 10px;
+  font-size: 50px;
+  color: #00A79D;
+
+}
+
+.top{
+  height: 38.5vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+  background-color: #E5F3F2;
+}
+
+.idea-input{
+  display: flex;
+  flex-flow: column wrap;
+  width: 55%;
+}
+
+.idea-input-title,
+.idea-input-body{
+  font-size: 24px;
+  padding-left: 10px;
+}
+
+.idea-input-save-button{
+  background-color: #00A79D;
+  color: #FFF;
+  border: none;
+  font-size: 16px;
+  height: 35px;
+}
+
+.idea-input-save-button:hover {
+  background-color: #045E55;
+}
+
+.idea-input-title,
+.idea-input-body,
+.idea-input-save-button {
+  margin-top: 10px;
+}
+
+.box-title{
+  color: #6d6e71
+}
