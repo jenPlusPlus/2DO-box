@@ -2,21 +2,37 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>  
+    <title>ideabox</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans+400|Roboto+Slab+700" rel="stylesheet">
+  <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab">
   </head>
   <body>
     <main>
       <section class="top">
-          <h1>idea<span class="box-title">box</span></h1>
+          <h1 class="box-title-teal">idea<span class="box-title-grey">box</span></h1>
           <form class="idea-input">
             <input class = "idea-input-title" type="text" placeholder="Title">
             <input class = "idea-input-body" type="text" placeholder="Body">
             <input class= "idea-input-save-button" type="submit" value="save">
           </form>
       </section>
-    <section class="bottom"</section>
+    <section class="bottom">
+      <form class="search-bar">
+        <input class="search-bar-input" type="text" placeholder="Search">
+      </form>
+    <article class="idea-box">
+      <div class="idea-box-top-line">
+        <h2 class="idea-box-header">Example Idea One</h2>
+        <img class="idea-box-delete-button" src="delete.svg" alt="delete button">
+      </div>
+      <p class="idea-box-text">Lorem Khaled Ipsum is a major key to success. Special cloth alert. Surround yourself with angels. Celebrate </p>
+      <div class="idea-box-bottom-line">
+        <img class="idea-box-upvote-button" src="upvote.svg" alt="upvote button">
+        <img class="idea-box-downvote-button" src="downvote.svg" alt="downvote button">
+        <p class="idea-box-quality">quality:<span class="idea-box-quality-value">swill</span></p>
+      </div>
+    </article>
+    </section>
   </main>
 
 
