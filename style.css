@@ -99,6 +99,10 @@ font-weight: 700;
   margin-top: 10px;
 }
 
+.icon {
+  height: 28px;
+}
+
 .idea-box-top-line{
   display: flex;
   justify-content: space-between;
@@ -109,13 +113,32 @@ font-weight: 700;
   color: #6D6E71;
 }
 
+.idea-box-text{
+  margin-top: 5px;
+  font-size: 16px;
+  color: #939598;
+  font-family: "Open Sans";
+  line-height: 18px;
+}
+
 .idea-box-bottom-line{
   display: flex;
   justify-content: flex-start;
   border-bottom: 2px solid #D1D3D4;
+  align-items: center;
+  margin-top: 15px;
+  padding-bottom: 15px;
+
 }
-.idea-box-text{
-  margin: 5px 0 10px 0;
-  font-size: 16px;
-  color: #939598;
+
+.idea-box-quality,
+.idea-box-quality-value {
+  font-family: "Open Sans";
+  color: #6D6E71;
+}
+
+.idea-box-downvote-button,
+.idea-box-quality {
+  margin-left: 15px;
+
 }
