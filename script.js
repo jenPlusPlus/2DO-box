@@ -1,12 +1,17 @@
-$('.idea-input-save-button').on('click', function(e) {
+// SAVE BUTTON EVENT LISTENER
+$('.top').on('click', '.idea-input-save-button', function(e) {
   e.preventDefault();
+
+  var ideaInputTitle = $('.idea-input-title').val();
+  var ideaInputBody = $('.idea-input-body').val();
+
   $('.bottom').prepend(`
     <article class="idea-box">
       <div class="idea-box-top-line">
-        <h2 class="idea-box-header">Example Idea One</h2>
+        <h2 class="idea-box-header">${ideaInputTitle}</h2>
         <img class="idea-box-delete-button icon" src="images/delete.svg" alt="delete button" />
       </div>
-      <p class="idea-box-text">Lorem Khaled Ipsum is a major key to success. Special cloth alert. Surround yourself with angels. Celebrate </p>
+      <p class="idea-box-text">${ideaInputBody}</p>
       <div class="idea-box-bottom-line">
         <img class="idea-box-upvote-button icon" src="images/upvote.svg" alt="upvote button" />
         <img class="idea-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" />
