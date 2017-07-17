@@ -74,13 +74,26 @@ font-weight: 700;
   color: #6d6e71;
 }
 
+/* MIDDLE */
+
+.middle {
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* BOTTOM */
+
 .bottom {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
   align-items: center;
   width: 100%;
   background-color: #FFF;
-  height: 61.5vh;
+  height: 51.5vh;
+  overflow-y: scroll;
 }
 
 .search-bar {
@@ -93,6 +106,7 @@ font-weight: 700;
 .idea-box {
   width: 55%;
   margin-top: 10px;
+  flex: none;
 }
 
 .icon {
