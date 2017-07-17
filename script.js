@@ -19,4 +19,7 @@ $('.top').on('click', '.idea-input-save-button', function(e) {
       </div>
     </article>
     `);
+
+    $('.idea-input-title').val('');
+    $('.idea-input-body').val('');
 })
