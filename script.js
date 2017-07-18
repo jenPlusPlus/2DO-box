@@ -5,6 +5,7 @@ function Idea() {
   this.quality = 'swill';
 }
 
+// http://www.frontcoded.com/javascript-create-unique-ids.html
 Idea.prototype.generateID = function() {
   this.id = 'id-' + Math.random().toString(36).substr(2,16);
 }
@@ -17,7 +18,7 @@ Idea.prototype.setQuality = function() {
 }
 
 // SAVE BUTTON EVENT LISTENER
-$('.top').on('click', '.idea-input-save-button', function(e) {
+$('.idea-input-save-button').on('click', function(e) {
   e.preventDefault();
 
   var ideaInputTitle = $('.idea-input-title').val();
@@ -49,5 +50,8 @@ $('.top').on('click', '.idea-input-save-button', function(e) {
     $('.idea-input-body').val('');
 })
 
+// DELETE BUTTON EVENT LISTENER
 
-// http://www.frontcoded.com/javascript-create-unique-ids.html
+$('.bottom').on('click', '.idea-box-delete-button', function(){
+ 
+})
