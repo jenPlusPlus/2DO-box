@@ -1,5 +1,3 @@
-var state = [];
-
 function Idea() {
   this.id = 0;
   this.title = 0;
@@ -45,7 +43,7 @@ $('.top').on('click', '.idea-input-save-button', function(e) {
     </article>
     `);
 
-    state.push(newIdea);
+    window.localStorage.setItem(JSON.stringify(newIdea),'idea');
 
     $('.idea-input-title').val('');
     $('.idea-input-body').val('');
