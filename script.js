@@ -7,7 +7,7 @@ function Idea() {
 
 // http://www.frontcoded.com/javascript-create-unique-ids.html
 Idea.prototype.generateID = function() {
-  this.id = 'id-' + Math.random().toString(36).substr(2,16);
+  this.id = '' + Math.random().toString(36).substr(2,16);
 }
 
 Idea.prototype.setQuality = function() {
@@ -44,14 +44,16 @@ $('.idea-input-save-button').on('click', function(e) {
     </article>
     `);
 
-    window.localStorage.setItem(JSON.stringify(newIdea),'idea');
+    window.localStorage.setItem(newIdea.id, JSON.stringify(newIdea));
 
     $('.idea-input-title').val('');
     $('.idea-input-body').val('');
+
+    $('.idea-input-title').focus();
 })
 
 // DELETE BUTTON EVENT LISTENER
 
 $('.bottom').on('click', '.idea-box-delete-button', function(){
- 
+
 })
