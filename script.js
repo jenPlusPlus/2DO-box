@@ -23,10 +23,7 @@ Idea.prototype.setQuality = function() {
   // this.quality = 'plausible';
 };
 
-
-
 function loadSavedIdeas (){
-
   if (localStorage.getItem('globalArray') !== null){
 
     var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
@@ -89,12 +86,15 @@ $('.bottom').on('click', '.idea-box-delete-button', function(e){
 
   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
 
-  for(var i = 0; i < parsedGlobalArray.length; i++) {
-    parsedGlobalArray[i].id
-  }
+  //find index
+  var index = parsedGlobalArray.findIndex(function(element){
+    return element.id === key;
+  })
+  // splice
+  parsedGlobalArray.splice(index, 1);
 
-  // parsedGlobalArray[i].findIndex(key)
+  var stringifiedGlobalArray = JSON.stringify(parsedGlobalArray);
+  localStorage.setItem('globalArray', stringifiedGlobalArray);
 
-  localStorage.removeItem();
   $(this).closest('article').remove();
 });
