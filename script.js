@@ -80,6 +80,10 @@ function createBox (idea) {
 
 // DELETE BUTTON EVENT LISTENER
 
-$('.bottom').on('click', '.idea-box-delete-button', function(){
+$('.bottom').on('click', '.idea-box-delete-button', function(e){
+  e.preventDefault();
 
+  var key = ;
+  localStorage.removeItem();
+  $(this).closest('article').remove();
 });
