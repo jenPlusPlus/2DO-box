@@ -101,3 +101,14 @@ $('.bottom').on('click', '.idea-box-delete-button', function(e){
 
   $(this).closest('article').remove();
 });
+
+// UPVOTE BUTTON EVENT LISTENER
+
+$('.bottom').on('click','.idea-box-upvote-button', function() {
+  console.log('upvote')
+})
+
+// DOWNVOTE BUTTON EVENT LISTENER
+$('.bottom').on('click','.idea-box-downvote-button', function() {
+  console.log('downvote');
+})
