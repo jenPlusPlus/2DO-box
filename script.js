@@ -1,4 +1,7 @@
 var globalArray = [];
+var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
+var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+globalArray = parsedGlobalArray;
 
 $(function () {
   loadSavedIdeas();
@@ -92,8 +95,8 @@ $('.bottom').on('click', '.idea-box-delete-button', function(e){
   })
   // splice
   parsedGlobalArray.splice(index, 1);
-
-  var stringifiedGlobalArray = JSON.stringify(parsedGlobalArray);
+  globalArray = parsedGlobalArray;
+  var stringifiedGlobalArray = JSON.stringify(globalArray);
   localStorage.setItem('globalArray', stringifiedGlobalArray);
 
   $(this).closest('article').remove();
