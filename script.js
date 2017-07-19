@@ -1,7 +1,10 @@
 var globalArray = [];
 var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
+
+if(globalArrayPulledFromLocalStorage != null){
 var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
 globalArray = parsedGlobalArray;
+}
 
 $(function () {
   loadSavedIdeas();
@@ -50,6 +53,7 @@ $('.idea-input-save-button').on('click', function(e) {
   newIdea.title = ideaInputTitle;
   newIdea.body = ideaInputBody;
 
+  // debugger
   createBox(newIdea);
 
   globalArray.push(newIdea);
