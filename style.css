@@ -109,6 +109,10 @@ font-weight: 700;
   flex: none;
 }
 
+.idea-box-id-hidden {
+ display: none;
+}
+
 .icon {
   height: 28px;
 }

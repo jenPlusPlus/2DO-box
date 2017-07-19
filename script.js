@@ -64,6 +64,7 @@ $('.idea-input-save-button').on('click', function(e) {
 function createBox (idea) {
   $('.bottom').prepend(`
     <article class="idea-box">
+      <p class="idea-box-id-hidden">${idea.id}</p>
       <div class="idea-box-top-line">
         <h2 class="idea-box-header">${idea.title}</h2>
         <img class="idea-box-delete-button icon" src="images/delete.svg" alt="delete button" />
@@ -83,7 +84,17 @@ function createBox (idea) {
 $('.bottom').on('click', '.idea-box-delete-button', function(e){
   e.preventDefault();
 
-  var key = ;
+  var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
+  var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+
+  var key = $(this).closest('article').find('.idea-box-id-hidden').text();
+
+  for(var i = 0; i < parsedGlobalArray.length; i++) {
+    parsedGlobalArray[i].id
+  }
+
+  // parsedGlobalArray[i].findIndex(key)
+
   localStorage.removeItem();
   $(this).closest('article').remove();
 });
