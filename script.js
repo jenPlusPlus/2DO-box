@@ -130,7 +130,6 @@ $('.bottom').on('click','.idea-box-upvote-button', function(e) {
   })
   if (parsedGlobalArray[index].quality === 'swill') {
     parsedGlobalArray[index].quality = 'plausible';
-    console.log(parsedGlobalArray[index].quality)
     $(this).closest('div').find('span').text('plausible');
     globalArray = parsedGlobalArray;
     pushGlobalArrayToLocalStorage();
@@ -138,10 +137,9 @@ $('.bottom').on('click','.idea-box-upvote-button', function(e) {
   }
     else if (parsedGlobalArray[index].quality === 'plausible'){
     parsedGlobalArray[index].quality = 'genius';
-    console.log(parsedGlobalArray[index].quality)
+    $(this).closest('div').find('span').text('genius');
     globalArray = parsedGlobalArray;
     pushGlobalArrayToLocalStorage();
-    $(this).closest('div').find('span').text('genius');
   }
 })
 
@@ -159,21 +157,54 @@ $('.bottom').on('click','.idea-box-downvote-button', function(e) {
     return element.id === key;
   })
   if (parsedGlobalArray[index].quality === 'genius') {
-    parsedGlobalArray[index].quality = 'plausible';
-    console.log(parsedGlobalArray[index].quality)
-    $(this).closest('div').find('span').text('plausible');
-    globalArray = parsedGlobalArray;
-    pushGlobalArrayToLocalStorage();
-
+      parsedGlobalArray[index].quality = 'plausible';
+      $(this).closest('div').find('span').text('plausible');
+      globalArray = parsedGlobalArray;
+      pushGlobalArrayToLocalStorage();
   }
     else if (parsedGlobalArray[index].quality === 'plausible'){
-    parsedGlobalArray[index].quality = 'swill';
-    console.log(parsedGlobalArray[index].quality)
+      parsedGlobalArray[index].quality = 'swill';
+      $(this).closest('div').find('span').text('swill');
+      globalArray = parsedGlobalArray;
+      pushGlobalArrayToLocalStorage();
+  }
+})
+
+// TITLE EDIT EVENT LISTENER
+$('.bottom').on('click', '.idea-box-header', function() {
+   $(this).prop("contenteditable") === true ? null: $(this).prop("contenteditable", true);
+   $(this).on('blur', function() {
+
+    var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
+    var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+
+    var key = $(this).closest('article').find('.idea-box-id-hidden').text();
+    var index = parsedGlobalArray.findIndex(function(element){
+      return element.id === key;
+    })
+
+    parsedGlobalArray[index].title = $(this).text();
     globalArray = parsedGlobalArray;
     pushGlobalArrayToLocalStorage();
-    $(this).closest('div').find('span').text('swill');
-  }
+  })
+})
 
+// BODY EDIT EVENT LISTENER
+$('.bottom').on('click', '.idea-box-text', function() {
+  ($(this).prop("contenteditable") === true) ? null: $(this).prop("contenteditable", true);
 
+  $(this).on('blur', function() {
 
+   var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
+   var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+
+   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
+   var index = parsedGlobalArray.findIndex(function(element){
+     return element.id === key;
+   })
+
+   parsedGlobalArray[index].body = $(this).text();
+   globalArray = parsedGlobalArray;
+   pushGlobalArrayToLocalStorage();
+ })
 })
