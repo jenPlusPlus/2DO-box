@@ -17,13 +17,6 @@ Idea.prototype.generateID = function() {
   this.id = '' + Math.random().toString(36).substr(2,16);
 };
 
-Idea.prototype.setQuality = function() {
-  // some logic
-  // this.quality = 'genius';
-  // // some other logic
-  // this.quality = 'plausible';
-};
-
 function pushGlobalArrayToLocalStorage() {
   var stringifiedGlobalArray = JSON.stringify(globalArray);
   localStorage.setItem('globalArray', stringifiedGlobalArray);
@@ -93,7 +86,7 @@ function createBox (idea) {
       <div class="idea-box-bottom-line">
         <img class="idea-box-upvote-button icon" src="images/upvote.svg" alt="upvote button" />
         <img class="idea-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" />
-        <p class="idea-box-quality">quality:<span class="idea-box-quality-value">${idea.quality}</span></p>
+        <p class="idea-box-quality">quality: <span class="idea-box-quality-value">${idea.quality}</span></p>
       </div>
     </article>
     `);
