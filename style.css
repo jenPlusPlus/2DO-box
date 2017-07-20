@@ -45,11 +45,17 @@ font-weight: 700;
   width: 55%;
 }
 
+.idea-input-body {
+  display: flex;
+  align-items: flex-start;
+}
+
 .idea-input-title,
 .idea-input-body,
 .search-bar-input{
   font-size: 24px;
   padding-left: 10px;
+  height: 35px;
 }
 
 .idea-input-save-button{
@@ -129,10 +135,13 @@ font-weight: 700;
 .idea-box-header{
   font-size: 24px;
   color: #6D6E71;
+  line-height: 28px;
+  margin-right: 25px;
 }
 
 .idea-box-text{
-  margin-top: 5px;
+  margin-top: 15px;
+  margin-right: 25px;
   font-size: 16px;
   color: #939598;
   font-family: "Open Sans";
@@ -162,10 +171,37 @@ font-weight: 700;
 
 }
 
-@media (max-width: 480px){
+@media (max-width: 950px){
+  .idea-input {
+    width: 65%;
+  }
 
-}
+  .search-bar {
+    width: 65%;
+  }
 
-@media (max-width: 768px){
-  /* this is a comment */
-}
+  .idea-box {
+    width: 65%;
+  }
+
+  .idea-input-body {
+    height: 75px;
+  }
+
+@media (max-width: 800px){
+  .idea-input {
+    width: 90%;
+  }
+
+  .search-bar {
+    width: 90%;
+  }
+
+  .idea-box {
+    width: 90%;
+  }
+
+  .idea-input-body {
+    height: 100px;
+
+  }

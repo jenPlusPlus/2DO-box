@@ -203,6 +203,13 @@ $('.bottom').on('click','.idea-box-downvote-button', function(e) {
 // TITLE EDIT EVENT LISTENER
 $('.bottom').on('click', '.idea-box-header', function() {
    $(this).prop("contenteditable") === true ? null: $(this).prop("contenteditable", true);
+
+   $(this).on('keydown', function(){
+     if(e.which == 13) {
+        alert('You pressed enter!');
+    }
+   })
+
    $(this).on('blur', function() {
 
     var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
