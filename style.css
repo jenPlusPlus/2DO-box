@@ -64,6 +64,10 @@ font-weight: 700;
   background-color: #045E55;
 }
 
+.idea-input-save-button:disabled {
+  background-color: #6D6E71;
+}
+
 .idea-input-title,
 .idea-input-body,
 .idea-input-save-button {
