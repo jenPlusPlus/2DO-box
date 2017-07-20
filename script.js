@@ -41,7 +41,7 @@ function loadSavedIdeas (){
     }
   }
 }
-
+// INPUT FIELD EVENT LISTENER
   $(".idea-input-title").keyup(function() {
   $(".idea-input-save-button").prop("disabled", !this.value);
 });
@@ -49,6 +49,35 @@ function loadSavedIdeas (){
   $(".idea-input-body").keyup(function() {
   $(".idea-input-save-button").prop("disabled", !this.value);
 });
+
+// BUTTON HOVER EVENT LISTENER
+
+// delete
+$('.bottom').on('mouseover', '.idea-box-delete-button', function() {
+  $(this).prop("src", "images/delete-hover.svg");
+})
+
+$('.bottom').on('mouseleave', '.idea-box-delete-button', function() {
+  $(this).prop("src", "images/delete.svg");
+})
+
+// upvote
+$('.bottom').on('mouseover', '.idea-box-upvote-button', function() {
+  $(this).prop("src", "images/upvote-hover.svg");
+})
+
+$('.bottom').on('mouseleave', '.idea-box-upvote-button', function() {
+  $(this).prop("src", "images/upvote.svg");
+})
+
+// downvote
+$('.bottom').on('mouseover', '.idea-box-downvote-button', function() {
+  $(this).prop("src", "images/downvote-hover.svg");
+})
+
+$('.bottom').on('mouseleave', '.idea-box-downvote-button', function() {
+  $(this).prop("src", "images/downvote.svg");
+})
 
 // SAVE BUTTON EVENT LISTENER
 $('.idea-input-save-button').on('click', function(e) {
