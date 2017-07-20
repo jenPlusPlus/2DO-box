@@ -153,6 +153,7 @@ font-weight: 700;
 .idea-box-quality-value {
   font-family: "Open Sans";
   color: #6D6E71;
+  white-space: pre-wrap;
 }
 
 .idea-box-downvote-button,
