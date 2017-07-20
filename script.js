@@ -1,10 +1,5 @@
 var globalArray = [];
-var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
-
-if(globalArrayPulledFromLocalStorage != null){
-var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
-globalArray = parsedGlobalArray;
-}
+pullGlobalArrayFromLocalStorage();
 
 $(function () {
   loadSavedIdeas();
@@ -28,6 +23,19 @@ Idea.prototype.setQuality = function() {
   // // some other logic
   // this.quality = 'plausible';
 };
+
+function pushGlobalArrayToLocalStorage() {
+  var stringifiedGlobalArray = JSON.stringify(globalArray);
+  localStorage.setItem('globalArray', stringifiedGlobalArray);
+};
+
+function pullGlobalArrayFromLocalStorage() {
+  var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
+  if(globalArrayPulledFromLocalStorage != null){
+  var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+  globalArray = parsedGlobalArray;
+  }
+}
 
 function loadSavedIdeas (){
   if (localStorage.getItem('globalArray') !== null){
@@ -77,7 +85,7 @@ function createBox (idea) {
       <div class="idea-box-bottom-line">
         <img class="idea-box-upvote-button icon" src="images/upvote.svg" alt="upvote button" />
         <img class="idea-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" />
-        <p class="idea-box-quality">quality:<span class="idea-box-quality-value">swill</span></p>
+        <p class="idea-box-quality">quality:<span class="idea-box-quality-value">${idea.quality}</span></p>
       </div>
     </article>
     `);
@@ -108,11 +116,64 @@ $('.bottom').on('click', '.idea-box-delete-button', function(e){
 
 // UPVOTE BUTTON EVENT LISTENER
 
-$('.bottom').on('click','.idea-box-upvote-button', function() {
-  console.log('upvote')
+$('.bottom').on('click','.idea-box-upvote-button', function(e) {
+  e.preventDefault();
+
+  var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
+  var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+
+  var key = $(this).closest('article').find('.idea-box-id-hidden').text();
+
+  //find index
+  var index = parsedGlobalArray.findIndex(function(element){
+    return element.id === key;
+  })
+  if (parsedGlobalArray[index].quality === 'swill') {
+    parsedGlobalArray[index].quality = 'plausible';
+    console.log(parsedGlobalArray[index].quality)
+    $(this).closest('div').find('span').text('plausible');
+    globalArray = parsedGlobalArray;
+    pushGlobalArrayToLocalStorage();
+
+  }
+    else if (parsedGlobalArray[index].quality === 'plausible'){
+    parsedGlobalArray[index].quality = 'genius';
+    console.log(parsedGlobalArray[index].quality)
+    globalArray = parsedGlobalArray;
+    pushGlobalArrayToLocalStorage();
+    $(this).closest('div').find('span').text('genius');
+  }
 })
 
 // DOWNVOTE BUTTON EVENT LISTENER
-$('.bottom').on('click','.idea-box-downvote-button', function() {
-  console.log('downvote');
+$('.bottom').on('click','.idea-box-downvote-button', function(e) {
+  e.preventDefault();
+
+  var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
+  var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+
+  var key = $(this).closest('article').find('.idea-box-id-hidden').text();
+
+  //find index
+  var index = parsedGlobalArray.findIndex(function(element){
+    return element.id === key;
+  })
+  if (parsedGlobalArray[index].quality === 'genius') {
+    parsedGlobalArray[index].quality = 'plausible';
+    console.log(parsedGlobalArray[index].quality)
+    $(this).closest('div').find('span').text('plausible');
+    globalArray = parsedGlobalArray;
+    pushGlobalArrayToLocalStorage();
+
+  }
+    else if (parsedGlobalArray[index].quality === 'plausible'){
+    parsedGlobalArray[index].quality = 'swill';
+    console.log(parsedGlobalArray[index].quality)
+    globalArray = parsedGlobalArray;
+    pushGlobalArrayToLocalStorage();
+    $(this).closest('div').find('span').text('swill');
+  }
+
+
+
 })
