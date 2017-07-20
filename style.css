@@ -1,3 +1,46 @@
+/* ==============================================
+
+  =====================
+  = TABLE OF CONTENTS =
+  =====================
+
+  1. Top
+    * Ideabox Logo Header
+    * Idea Input Form
+  2. Middle
+    * Search Bar
+  3. Bottom
+    * Ideabox Style
+    * Ideabox Top Line
+    * Ideabox Text
+    * Ideabox Bottom Line
+  4. Media Queries
+    * 950 Media Query
+    * 800 Media Query
+
+  =========
+  = FONTS =
+  =========
+
+  1. Open Sans, Regular 700
+  2. Roboto Slab, Bold 700
+
+  =================
+  = COLOR PALLETE =
+  =================
+
+  #E5F3F2 - Top background color
+  #00A79D - Ideabox logo text teal
+  #6D6E71 - Ideabox logo text grey
+  #00A79D - Save Button
+  #FFF    - Save Button text color
+  #045E55 - Save Button:hover
+  #6D6E71 - Save Button disabled
+  #6D6E71 - Idea Box Title
+  #939598 - Idea Box Body
+
+============================================== */
+
 * {
   margin: 0;
 }
@@ -11,11 +54,30 @@ main {
   flex-flow: column wrap;
 }
 
+/* =======
+   = TOP =
+   ======= */
+
+ .top{
+   height: 38.5vh;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column wrap;
+   background-color: #E5F3F2;
+ }
+
+/* IDEABOX LOGO HEADER */
 h1{
   margin-top: -10px;
   margin-bottom: 10px;
   font-size: 50px;
   color: #00A79D;
+}
+
+.box-title{
+  color: #6d6e71;
 }
 
 .box-title-grey {
@@ -29,16 +91,7 @@ font-family: "Roboto Slab";
 font-weight: 700;
 }
 
-.top{
-  height: 38.5vh;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-flow: column wrap;
-  background-color: #E5F3F2;
-}
-
+/* IDEA INPUT FORM */
 .idea-input{
   display: flex;
   flex-flow: column wrap;
@@ -80,11 +133,9 @@ font-weight: 700;
   margin-top: 10px;
 }
 
-.box-title{
-  color: #6d6e71;
-}
-
-/* MIDDLE */
+/* ==========
+   = MIDDLE =
+   ========== */
 
 .middle {
   height: 10vh;
@@ -94,7 +145,18 @@ font-weight: 700;
   width: 100%;
 }
 
-/* BOTTOM */
+/* SEARCH BAR */
+
+.search-bar {
+  display: flex;
+  flex-flow: column wrap;
+  width: 55%;
+  margin: 5px 0 10px 0;
+}
+
+/* ==========
+   = BOTTOM =
+   ========== */
 
 .bottom {
   display: flex;
@@ -106,27 +168,22 @@ font-weight: 700;
   overflow-y: scroll;
 }
 
-.search-bar {
-  display: flex;
-  flex-flow: column wrap;
-  width: 55%;
-  margin: 5px 0 10px 0;
-}
-
+/* IDEABOX STYLE */
 .idea-box {
   width: 55%;
   margin-top: 10px;
   flex: none;
 }
 
-.idea-box-id-hidden {
- display: none;
-}
-
 .icon {
   height: 28px;
 }
 
+.idea-box-id-hidden {
+ display: none;
+}
+
+/* IDEABOX TOP LINE */
 .idea-box-top-line{
   display: flex;
   justify-content: space-between;
@@ -139,6 +196,7 @@ font-weight: 700;
   margin-right: 25px;
 }
 
+/* IDEABOX TEXT */
 .idea-box-text{
   margin-top: 15px;
   margin-right: 25px;
@@ -148,6 +206,7 @@ font-weight: 700;
   line-height: 18px;
 }
 
+/* IDEABOX BOTTOM LINE */
 .idea-box-bottom-line{
   display: flex;
   justify-content: flex-start;
@@ -157,8 +216,9 @@ font-weight: 700;
   padding-bottom: 15px;
 }
 
-.idea-box-bottom-line p {
-  font-family: 'Roboto Slab', serif;
+.idea-box-downvote-button,
+.idea-box-quality {
+  margin-left: 15px;
 }
 
 .idea-box-quality,
@@ -168,13 +228,21 @@ font-weight: 700;
   white-space: pre-wrap;
 }
 
-.idea-box-downvote-button,
-.idea-box-quality {
-  margin-left: 15px;
-
+.idea-box-bottom-line p {
+  font-family: 'Roboto Slab', serif;
 }
 
+/* =================
+   = MEDIA QUERIES =
+   ================= */
+
+/* 950 MEDIA QUERY */
 @media (max-width: 950px){
+
+  .top {
+    height: 50vh;
+  }
+
   .idea-input {
     width: 65%;
   }
@@ -191,7 +259,12 @@ font-weight: 700;
     height: 75px;
   }
 
+/* 800 MEDIA QUERY */
 @media (max-width: 800px){
+
+  .top {
+    height: 50vh;
+  }
   .idea-input {
     width: 90%;
   }
@@ -202,6 +275,10 @@ font-weight: 700;
 
   .idea-box {
     width: 90%;
+  }
+
+  .box-title-teal {
+    margin-bottom: -5px;
   }
 
   .idea-input-body {
