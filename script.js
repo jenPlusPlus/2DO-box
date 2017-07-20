@@ -49,6 +49,14 @@ function loadSavedIdeas (){
   }
 }
 
+  $(".idea-input-title").keyup(function() {
+  $(".idea-input-save-button").prop("disabled", !this.value);
+});
+
+  $(".idea-input-body").keyup(function() {
+  $(".idea-input-save-button").prop("disabled", !this.value);
+});
+
 // SAVE BUTTON EVENT LISTENER
 $('.idea-input-save-button').on('click', function(e) {
   e.preventDefault();
@@ -207,4 +215,21 @@ $('.bottom').on('click', '.idea-box-text', function() {
    globalArray = parsedGlobalArray;
    pushGlobalArrayToLocalStorage();
  })
+})
+
+// SEARCH BAR EVENT LISTENER
+$('.search-bar-input').keyup(function (e) {
+  e.preventDefault();
+  var currentInputField = $(this).val();
+  var matchingIdeas = globalArray.filter(function(element, index){
+  //if title or body matches the search box, add element to array
+  return element.title.includes(currentInputField) || element.body.includes(currentInputField);
+  })
+
+  // delete all the boxes
+  $('.idea-box').remove();
+  // only show matchingIdeas boxes
+  for(var i = 0; i < matchingIdeas.length; i++){
+    createBox(matchingIdeas[i]);
+  }
 })
