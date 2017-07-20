@@ -155,7 +155,10 @@ font-weight: 700;
   align-items: center;
   margin-top: 15px;
   padding-bottom: 15px;
+}
 
+.idea-box-bottom-line p {
+  font-family: 'Roboto Slab', serif;
 }
 
 .idea-box-quality,
@@ -203,5 +206,4 @@ font-weight: 700;
 
   .idea-input-body {
     height: 100px;
-
   }
