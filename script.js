@@ -27,6 +27,8 @@
 
 */
 
+// test
+
 // ON PAGE LOAD
 var globalArray = [];
 pullGlobalArrayFromLocalStorage();
