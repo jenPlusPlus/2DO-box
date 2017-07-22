@@ -1,5 +1,5 @@
 /*  ------------------------------------------------------
-jen test git
+
   ---------------------
   - TABLE OF CONTENTS -
   ---------------------
@@ -27,23 +27,27 @@ jen test git
 
 */
 
-// test
-
 // ON PAGE LOAD
+// look at localStorage functions to avoid global array variable
 var globalArray = [];
+
+
 pullGlobalArrayFromLocalStorage();
 
-$(function () {
+// $(function () {
   loadSavedIdeas();
-});
+// });
 
+// refactor to take arguments (title, body, quality)
 function Idea() {
+  // thid.id = generateID();
   this.id = '';
   this.title = '';
   this.body = '';
   this.quality = 'swill';
 }
 
+// use date/time string for below (Nick (give more control over ID--less random))
 // http://www.frontcoded.com/javascript-create-unique-ids.html
 Idea.prototype.generateID = function() {
   this.id = '' + Math.random().toString(36).substr(2,16);
@@ -52,6 +56,9 @@ Idea.prototype.generateID = function() {
 /* -------------------
    - EVENT LISTENERS -
    ------------------- */
+
+   // make all of these named functions
+   // can we combine into a single function??? (Jen)
 
 // INPUT FIELD EVENT LISTENER
   $(".idea-input-title").keyup(function() {
@@ -62,8 +69,10 @@ Idea.prototype.generateID = function() {
   $(".idea-input-save-button").prop("disabled", !this.value);
 });
 
-// BUTTON HOVER EVENT LISTENER
 
+
+// BUTTON HOVER EVENT LISTENER (on cards)
+// better to do in css or named functions in JS??? (do research)
 // delete
 $('.bottom').on('mouseover', '.idea-box-delete-button', function() {
   $(this).prop("src", "images/delete-hover.svg");
@@ -91,10 +100,13 @@ $('.bottom').on('mouseleave', '.idea-box-downvote-button', function() {
   $(this).prop("src", "images/downvote.svg");
 })
 
-// SAVE BUTTON EVENT LISTENER
+
+
+// SAVE BUTTON EVENT
 $('.idea-input-save-button').on('click', function(e) {
   e.preventDefault();
 
+ // pass title & body as arguments to idea/todo constructor
   var ideaInputTitle = $('.idea-input-title').val();
   var ideaInputBody = $('.idea-input-body').val();
   var newIdea = new Idea();
@@ -105,13 +117,16 @@ $('.idea-input-save-button').on('click', function(e) {
 
   createBox(newIdea);
 
+  //remove globalArray statement, and only deal with localStorage from a function
   globalArray.push(newIdea);
-  window.localStorage.setItem('globalArray', JSON.stringify(globalArray));
+  //window.
+  localStorage.setItem('globalArray', JSON.stringify(globalArray));
 
+  // make below function to clear input fields and focus on title
   $('.idea-input-title').val('');
   $('.idea-input-body').val('');
-
   $('.idea-input-title').focus();
+
 });
 
 // SEARCH BAR EVENT LISTENER
@@ -122,6 +137,7 @@ $('.search-bar-input').keyup(function (e) {
   return element.title.includes(currentInputField) || element.body.includes(currentInputField);
   })
 
+  // change below to only remove non-matching cards
   $('.idea-box').remove();
   for(var i = 0; i < matchingIdeas.length; i++){
     createBox(matchingIdeas[i]);
@@ -131,26 +147,36 @@ $('.search-bar-input').keyup(function (e) {
 // DELETE BUTTON EVENT LISTENER
 $('.bottom').on('click', '.idea-box-delete-button', function(){
 
+  // use named functions to deal with localStorage
   var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
   var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+
+  // create function to find index (use for upvote & downvote)
   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
   var index = parsedGlobalArray.findIndex(function(element){
     return element.id === key;
   })
 
+  // own function to splice localStorage array??
   parsedGlobalArray.splice(index, 1);
-  globalArray = parsedGlobalArray;
+  // globalArray = parsedGlobalArray;
+
+  //named function for storing in localStorage
   var stringifiedGlobalArray = JSON.stringify(globalArray);
   localStorage.setItem('globalArray', stringifiedGlobalArray);
 
-  $(this).closest('article').remove();
+  // make its own function
+    $(this).closest('article').remove();
 });
 
 // UPVOTE BUTTON EVENT LISTENER
 
 $('.bottom').on('click','.idea-box-upvote-button', function() {
+  // use named functions to deal with localStorage
   var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
   var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+
+  // create function to find index (use for upvote & downvote)
   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
   var index = parsedGlobalArray.findIndex(function(element){
     return element.id === key;
@@ -170,15 +196,21 @@ $('.bottom').on('click','.idea-box-upvote-button', function() {
   }
 })
 
+// use an array here for quality -jw
+
 // DOWNVOTE BUTTON EVENT LISTENER
 $('.bottom').on('click','.idea-box-downvote-button', function() {
+  // use named functions to deal with localStorage
   var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
   var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+
+  // create function to find index (use for upvote & downvote)
   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
   var index = parsedGlobalArray.findIndex(function(element){
     return element.id === key;
   })
 
+// use array for below (Jen)
   if (parsedGlobalArray[index].quality === 'genius') {
     parsedGlobalArray[index].quality = 'plausible';
     $(this).closest('div').find('span').text('plausible');
@@ -193,17 +225,24 @@ $('.bottom').on('click','.idea-box-downvote-button', function() {
 })
 
 // TITLE EDIT EVENT LISTENER
+  //  ternary conditional??? (use html attribute instead)
 $('.bottom').on('click', '.idea-box-header', function() {
    $(this).prop("contenteditable") === true ? null : $(this).prop("contenteditable", true);
 
+
+//
    $(this).on('blur', function() {
+     // use named function
       var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
       var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+
+      // use find key function
       var key = $(this).closest('article').find('.idea-box-id-hidden').text();
       var index = parsedGlobalArray.findIndex(function(element){
         return element.id === key;
       })
 
+      // edit localStorage directly
     parsedGlobalArray[index].title = $(this).text();
     globalArray = parsedGlobalArray;
     pushGlobalArrayToLocalStorage();
@@ -211,12 +250,16 @@ $('.bottom').on('click', '.idea-box-header', function() {
 })
 
 // BODY EDIT EVENT LISTENER
+// use html attribute instead
 $('.bottom').on('click', '.idea-box-text', function() {
   ($(this).prop("contenteditable") === true) ? null: $(this).prop("contenteditable", true);
 
   $(this).on('blur', function() {
+    // use named function
    var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
    var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+
+   // use find key function
    var key = $(this).closest('article').find('.idea-box-id-hidden').text();
    var index = parsedGlobalArray.findIndex(function(element){
      return element.id === key;
@@ -229,7 +272,8 @@ $('.bottom').on('click', '.idea-box-text', function() {
 })
 
 // FUNCTIONS
-
+// edit html more javasciprt friendly also edit html class names
+// line 289 may need to change, if using array for quality
 function createBox (idea) {
 $('.bottom').prepend(`
   <article class="idea-box">
@@ -248,6 +292,10 @@ $('.bottom').prepend(`
   `);
 }
 
+
+
+// look at the funtions below to avoid global array variable
+// reconsider names & reuse elsewhere in code
 function pushGlobalArrayToLocalStorage() {
   var stringifiedGlobalArray = JSON.stringify(globalArray);
   localStorage.setItem('globalArray', stringifiedGlobalArray);
@@ -264,6 +312,7 @@ function pullGlobalArrayFromLocalStorage() {
 function loadSavedIdeas (){
   if (localStorage.getItem('globalArray') !== null){
 
+    // use named function below: pushGlobalArrayToLocalStorage
     var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
     var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
 
