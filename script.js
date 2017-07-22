@@ -21,18 +21,18 @@
 
   - Functions
     * createBox()
-    * pushGlobalArrayToLocalStorage()
-    * pullGlobalArrayFromLocalStorage()
+    * pushideaArrayToLocalStorage()
+    * pullideaArrayFromLocalStorage()
     * loadSavedIdeas()
 
 */
 
 // ON PAGE LOAD
 // look at localStorage functions to avoid global array variable
-var globalArray = [];
 
 
-pullGlobalArrayFromLocalStorage();
+
+pullideaArrayFromLocalStorage();
 
 // $(function () {
   loadSavedIdeas();
@@ -40,8 +40,7 @@ pullGlobalArrayFromLocalStorage();
 
 // refactor to take arguments (title, body, quality)
 function Idea() {
-  // thid.id = generateID();
-  this.id = '';
+//  this.id = '';
   this.title = '';
   this.body = '';
   this.quality = 'swill';
@@ -117,10 +116,7 @@ $('.idea-input-save-button').on('click', function(e) {
 
   createBox(newIdea);
 
-  //remove globalArray statement, and only deal with localStorage from a function
-  globalArray.push(newIdea);
-  //window.
-  localStorage.setItem('globalArray', JSON.stringify(globalArray));
+  pushIdeaToLocalStorage(newIdea)
 
   // make below function to clear input fields and focus on title
   $('.idea-input-title').val('');
@@ -133,7 +129,7 @@ $('.idea-input-save-button').on('click', function(e) {
 $('.search-bar-input').keyup(function (e) {
   e.preventDefault();
   var currentInputField = $(this).val();
-  var matchingIdeas = globalArray.filter(function(element){
+  var matchingIdeas = ideaArray.filter(function(element){
   return element.title.includes(currentInputField) || element.body.includes(currentInputField);
   })
 
@@ -148,22 +144,22 @@ $('.search-bar-input').keyup(function (e) {
 $('.bottom').on('click', '.idea-box-delete-button', function(){
 
   // use named functions to deal with localStorage
-  var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
-  var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+  var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
+  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
 
   // create function to find index (use for upvote & downvote)
   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-  var index = parsedGlobalArray.findIndex(function(element){
+  var index = parsedideaArray.findIndex(function(element){
     return element.id === key;
   })
 
   // own function to splice localStorage array??
-  parsedGlobalArray.splice(index, 1);
-  // globalArray = parsedGlobalArray;
+  parsedideaArray.splice(index, 1);
+  // ideaArray = parsedideaArray;
 
   //named function for storing in localStorage
-  var stringifiedGlobalArray = JSON.stringify(globalArray);
-  localStorage.setItem('globalArray', stringifiedGlobalArray);
+  var ideaArrayFromLS = JSON.stringify(ideaArray);
+  localStorage.setItem('ideaArray', ideaArrayFromLS);
 
   // make its own function
     $(this).closest('article').remove();
@@ -173,26 +169,26 @@ $('.bottom').on('click', '.idea-box-delete-button', function(){
 
 $('.bottom').on('click','.idea-box-upvote-button', function() {
   // use named functions to deal with localStorage
-  var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
-  var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+  var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
+  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
 
   // create function to find index (use for upvote & downvote)
   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-  var index = parsedGlobalArray.findIndex(function(element){
+  var index = parsedideaArray.findIndex(function(element){
     return element.id === key;
   })
 
-  if (parsedGlobalArray[index].quality === 'swill') {
-    parsedGlobalArray[index].quality = 'plausible';
+  if (parsedideaArray[index].quality === 'swill') {
+    parsedideaArray[index].quality = 'plausible';
     $(this).closest('div').find('span').text('plausible');
-    globalArray = parsedGlobalArray;
-    pushGlobalArrayToLocalStorage();
+    ideaArray = parsedideaArray;
+    pushideaArrayToLocalStorage();
 
-  } else if (parsedGlobalArray[index].quality === 'plausible'){
-      parsedGlobalArray[index].quality = 'genius';
+  } else if (parsedideaArray[index].quality === 'plausible'){
+      parsedideaArray[index].quality = 'genius';
       $(this).closest('div').find('span').text('genius');
-      globalArray = parsedGlobalArray;
-      pushGlobalArrayToLocalStorage();
+      ideaArray = parsedideaArray;
+      pushideaArrayToLocalStorage();
   }
 })
 
@@ -201,26 +197,26 @@ $('.bottom').on('click','.idea-box-upvote-button', function() {
 // DOWNVOTE BUTTON EVENT LISTENER
 $('.bottom').on('click','.idea-box-downvote-button', function() {
   // use named functions to deal with localStorage
-  var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
-  var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+  var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
+  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
 
   // create function to find index (use for upvote & downvote)
   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-  var index = parsedGlobalArray.findIndex(function(element){
+  var index = parsedideaArray.findIndex(function(element){
     return element.id === key;
   })
 
 // use array for below (Jen)
-  if (parsedGlobalArray[index].quality === 'genius') {
-    parsedGlobalArray[index].quality = 'plausible';
+  if (parsedideaArray[index].quality === 'genius') {
+    parsedideaArray[index].quality = 'plausible';
     $(this).closest('div').find('span').text('plausible');
-    globalArray = parsedGlobalArray;
-    pushGlobalArrayToLocalStorage();
-  } else if (parsedGlobalArray[index].quality === 'plausible'){
-      parsedGlobalArray[index].quality = 'swill';
+    ideaArray = parsedideaArray;
+    pushideaArrayToLocalStorage();
+  } else if (parsedideaArray[index].quality === 'plausible'){
+      parsedideaArray[index].quality = 'swill';
       $(this).closest('div').find('span').text('swill');
-      globalArray = parsedGlobalArray;
-      pushGlobalArrayToLocalStorage();
+      ideaArray = parsedideaArray;
+      pushideaArrayToLocalStorage();
   }
 })
 
@@ -233,19 +229,19 @@ $('.bottom').on('click', '.idea-box-header', function() {
 //
    $(this).on('blur', function() {
      // use named function
-      var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
-      var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+      var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
+      var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
 
       // use find key function
       var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-      var index = parsedGlobalArray.findIndex(function(element){
+      var index = parsedideaArray.findIndex(function(element){
         return element.id === key;
       })
 
       // edit localStorage directly
-    parsedGlobalArray[index].title = $(this).text();
-    globalArray = parsedGlobalArray;
-    pushGlobalArrayToLocalStorage();
+    parsedideaArray[index].title = $(this).text();
+    ideaArray = parsedideaArray;
+    pushideaArrayToLocalStorage();
   })
 })
 
@@ -256,18 +252,18 @@ $('.bottom').on('click', '.idea-box-text', function() {
 
   $(this).on('blur', function() {
     // use named function
-   var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
-   var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+   var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
+   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
 
    // use find key function
    var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-   var index = parsedGlobalArray.findIndex(function(element){
+   var index = parsedideaArray.findIndex(function(element){
      return element.id === key;
    })
 
-   parsedGlobalArray[index].body = $(this).text();
-   globalArray = parsedGlobalArray;
-   pushGlobalArrayToLocalStorage();
+   parsedideaArray[index].body = $(this).text();
+   ideaArray = parsedideaArray;
+   pushideaArrayToLocalStorage();
  })
 })
 
@@ -296,28 +292,27 @@ $('.bottom').prepend(`
 
 // look at the funtions below to avoid global array variable
 // reconsider names & reuse elsewhere in code
-function pushGlobalArrayToLocalStorage() {
-  var stringifiedGlobalArray = JSON.stringify(globalArray);
-  localStorage.setItem('globalArray', stringifiedGlobalArray);
+function pushIdeaToLocalStorage(newIdea) {
+  localStorage.setItem(newIdea.id, JSON.stringify(newIdea));
 };
 
-function pullGlobalArrayFromLocalStorage() {
-  var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
-  if(globalArrayPulledFromLocalStorage != null){
-    var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
-    globalArray = parsedGlobalArray;
+function pullideaArrayFromLocalStorage() {
+  var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
+  if(ideaArrayPulledFromLocalStorage != null){
+    var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+    ideaArray = parsedideaArray;
   }
 }
 
 function loadSavedIdeas (){
-  if (localStorage.getItem('globalArray') !== null){
+  if (localStorage.getItem('ideaArray') !== null){
 
-    // use named function below: pushGlobalArrayToLocalStorage
-    var globalArrayPulledFromLocalStorage = localStorage.getItem('globalArray');
-    var parsedGlobalArray = JSON.parse(globalArrayPulledFromLocalStorage);
+    // use named function below: pushideaArrayToLocalStorage
+    var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
+    var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
 
-    for(var i = 0; i < parsedGlobalArray.length; i++) {
-      createBox(parsedGlobalArray[i]);
+    for(var i = 0; i < parsedideaArray.length; i++) {
+      createBox(parsedideaArray[i]);
     }
   }
 }
