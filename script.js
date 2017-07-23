@@ -117,10 +117,7 @@ $('.idea-input-save-button').on('click', function(e) {
 
   createBox(newIdea);
 
-  //remove globalArray statement, and only deal with localStorage from a function
-  globalArray.push(newIdea);
-  //window.
-  localStorage.setItem('globalArray', JSON.stringify(globalArray));
+  localStorage.setItem(newIdea.id, JSON.stringify(newIdea));
 
   // make below function to clear input fields and focus on title
   $('.idea-input-title').val('');
