@@ -116,7 +116,8 @@ $('.idea-input-save-button').on('click', function(e) {
 
   createBox(newIdea);
 
-  pushIdeaToLocalStorage(newIdea)
+  localStorage.setItem(newIdea.id, JSON.stringify(newIdea));
+ 
 
   // make below function to clear input fields and focus on title
   $('.idea-input-title').val('');
