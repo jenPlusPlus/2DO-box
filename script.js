@@ -57,13 +57,8 @@ populateDom();
 // BUTTON HOVER EVENT LISTENER (on cards)
 // better to do in css or named functions in JS??? (do research)
 // delete
-$('.bottom').on('mouseover', '.idea-box-delete-button', function() {
-  $(this).prop("src", "images/delete-hover.svg");
-})
-
-$('.bottom').on('mouseleave', '.idea-box-delete-button', function() {
-  $(this).prop("src", "images/delete.svg");
-})
+$('.bottom').on('mouseover', '.idea-box-delete-button', deleteHoverOn);
+$('.bottom').on('mouseleave', '.idea-box-delete-button', deleteHoverOff);
 
 // upvote
 $('.bottom').on('mouseover', '.idea-box-upvote-button', function() {
@@ -286,4 +281,12 @@ $('.bottom').prepend(`
    for(var i = 0; i < matchingIdeas.length; i++){
      createBox(matchingIdeas[i]);
    }
+ }
+
+ function deleteHoverOn(e) {
+   $(this).prop("src", "images/delete-hover.svg");
+ }
+
+ function deleteHoverOff(e) {
+   $(this).prop("src", "images/delete.svg");
  }
