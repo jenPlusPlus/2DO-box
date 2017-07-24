@@ -50,11 +50,11 @@ function populateDom() {
 }
 
 // refactor to take arguments (title, body, quality)
-function Idea() {
+function Idea(title, body, quality) {
   this.id = Date.now();
-  this.title = '';
-  this.body = '';
-  this.quality = 'swill';
+  this.title = title;
+  this.body = body;
+  this.quality = quality || 'swill';
 }
 
 
@@ -111,19 +111,14 @@ $('.bottom').on('mouseleave', '.idea-box-downvote-button', function() {
 $('.idea-input-save-button').on('click', function(e) {
   e.preventDefault();
 
- // pass title & body as arguments to idea/todo constructor
   var ideaInputTitle = $('.idea-input-title').val();
   var ideaInputBody = $('.idea-input-body').val();
-  var newIdea = new Idea();
-
-  newIdea.generateID();
-  newIdea.title = ideaInputTitle;
-  newIdea.body = ideaInputBody;
+  var newIdea = new Idea(ideaInputTitle, ideaInputBody);
 
   createBox(newIdea);
 
   localStorage.setItem(newIdea.id, JSON.stringify(newIdea));
- 
+
 
   // make below function to clear input fields and focus on title
   $('.idea-input-title').val('');
