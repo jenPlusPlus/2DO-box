@@ -71,7 +71,6 @@ $('.bottom').on('mouseleave', '.idea-box-downvote-button', downvoteHoverOff);
 
 
 // SAVE BUTTON EVENT
-
 $('.idea-input-save-button').on('click', saveInput);
 
 
@@ -79,13 +78,7 @@ $('.idea-input-save-button').on('click', saveInput);
 $('.search-bar-input').keyup(searchCards);
 
 // DELETE BUTTON EVENT LISTENER
-$('.bottom').on('click', '.idea-box-delete-button', function(){
-  var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-  findObjectByKeyInLocalStorage(key);
-  // make its own function
-  $(this).closest('article').remove();
-  localStorage.removeItem(key);
-});
+$('.bottom').on('click', '.idea-box-delete-button', deleteIdea);
 
 // UPVOTE BUTTON EVENT LISTENER
 
@@ -295,4 +288,12 @@ $('.bottom').prepend(`
 
  function downvoteHoverOff(e) {
    $(this).prop("src", "images/downvote.svg");
+ }
+
+ function deleteIdea(e) {
+   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
+   findObjectByKeyInLocalStorage(key);
+   // make its own function
+   $(this).closest('article').remove();
+   localStorage.removeItem(key);
  }
