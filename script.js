@@ -73,7 +73,6 @@ $('.bottom').on('mouseleave', '.idea-box-downvote-button', downvoteHoverOff);
 // SAVE BUTTON EVENT
 $('.idea-input-save-button').on('click', saveInput);
 
-
 // SEARCH BAR EVENT LISTENER
 $('.search-bar-input').keyup(searchCards);
 
@@ -81,59 +80,10 @@ $('.search-bar-input').keyup(searchCards);
 $('.bottom').on('click', '.idea-box-delete-button', deleteIdea);
 
 // UPVOTE BUTTON EVENT LISTENER
-
-$('.bottom').on('click','.idea-box-upvote-button', function() {
-  // use named functions to deal with localStorage
-  var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
-  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-
-  // create function to find index (use for upvote & downvote)
-  var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-  var index = parsedideaArray.findIndex(function(element){
-    return element.id === key;
-  })
-
-  if (parsedideaArray[index].quality === 'swill') {
-    parsedideaArray[index].quality = 'plausible';
-    $(this).closest('div').find('span').text('plausible');
-    ideaArray = parsedideaArray;
-    pushideaArrayToLocalStorage();
-
-  } else if (parsedideaArray[index].quality === 'plausible'){
-      parsedideaArray[index].quality = 'genius';
-      $(this).closest('div').find('span').text('genius');
-      ideaArray = parsedideaArray;
-      pushideaArrayToLocalStorage();
-  }
-})
-
-// use an array here for quality -jw
+$('.bottom').on('click','.idea-box-upvote-button', upvoteIdea);
 
 // DOWNVOTE BUTTON EVENT LISTENER
-$('.bottom').on('click','.idea-box-downvote-button', function() {
-  // use named functions to deal with localStorage
-  var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
-  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-
-  // create function to find index (use for upvote & downvote)
-  var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-  var index = parsedideaArray.findIndex(function(element){
-    return element.id === key;
-  })
-
-// use array for below (Jen)
-  if (parsedideaArray[index].quality === 'genius') {
-    parsedideaArray[index].quality = 'plausible';
-    $(this).closest('div').find('span').text('plausible');
-    ideaArray = parsedideaArray;
-    pushideaArrayToLocalStorage();
-  } else if (parsedideaArray[index].quality === 'plausible'){
-      parsedideaArray[index].quality = 'swill';
-      $(this).closest('div').find('span').text('swill');
-      ideaArray = parsedideaArray;
-      pushideaArrayToLocalStorage();
-  }
-})
+$('.bottom').on('click','.idea-box-downvote-button', downvoteIdea);
 
 // TITLE EDIT EVENT LISTENER
   //  ternary conditional??? (use html attribute instead)
@@ -296,4 +246,54 @@ $('.bottom').prepend(`
    // make its own function
    $(this).closest('article').remove();
    localStorage.removeItem(key);
+ }
+
+ function upvoteIdea(e) {
+   // use named functions to deal with localStorage
+   var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
+   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+
+   // create function to find index (use for upvote & downvote)
+   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
+   var index = parsedideaArray.findIndex(function(element){
+     return element.id === key;
+   })
+
+   if (parsedideaArray[index].quality === 'swill') {
+     parsedideaArray[index].quality = 'plausible';
+     $(this).closest('div').find('span').text('plausible');
+     ideaArray = parsedideaArray;
+     pushideaArrayToLocalStorage();
+
+   } else if (parsedideaArray[index].quality === 'plausible'){
+       parsedideaArray[index].quality = 'genius';
+       $(this).closest('div').find('span').text('genius');
+       ideaArray = parsedideaArray;
+       pushideaArrayToLocalStorage();
+   }
+ }
+
+ function downvoteIdea(e) {
+   // use named functions to deal with localStorage
+   var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
+   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+
+   // create function to find index (use for upvote & downvote)
+   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
+   var index = parsedideaArray.findIndex(function(element){
+     return element.id === key;
+   })
+
+ // use array for below (Jen)
+   if (parsedideaArray[index].quality === 'genius') {
+     parsedideaArray[index].quality = 'plausible';
+     $(this).closest('div').find('span').text('plausible');
+     ideaArray = parsedideaArray;
+     pushideaArrayToLocalStorage();
+   } else if (parsedideaArray[index].quality === 'plausible'){
+       parsedideaArray[index].quality = 'swill';
+       $(this).closest('div').find('span').text('swill');
+       ideaArray = parsedideaArray;
+       pushideaArrayToLocalStorage();
+   }
  }
