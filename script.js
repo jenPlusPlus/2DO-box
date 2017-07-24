@@ -279,15 +279,21 @@ $('.bottom').prepend(`
 
    localStorage.setItem(newIdea.id, JSON.stringify(newIdea));
 
-
-   // make below function to clear input fields and focus on title
-   $('.idea-input-title').val('');
-   $('.idea-input-body').val('');
-   $('.idea-input-title').focus();
+  clearInputFields()
+  focusOnTitle()
  }
 
  function enableSaveButton(e){
    if($(".idea-input-title").val() != "" && $(".idea-input-body").val() != ""){
      $(".idea-input-save-button").attr("disabled", false);
    }
+ }
+
+ function clearInputFields() {
+   $('.idea-input-title').val('');
+   $('.idea-input-body').val('');
+ }
+
+ function focusOnTitle() {
+   $('.idea-input-title').focus();
  }
