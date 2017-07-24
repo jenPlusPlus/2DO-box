@@ -126,26 +126,17 @@ $('.search-bar-input').keyup(function (e) {
 // DELETE BUTTON EVENT LISTENER
 $('.bottom').on('click', '.idea-box-delete-button', function(){
 
-  // use named functions to deal with localStorage
-  var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
-  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-
   // create function to find index (use for upvote & downvote)
   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-  var index = parsedideaArray.findIndex(function(element){
-    return element.id === key;
-  })
 
-  // own function to splice localStorage array??
-  parsedideaArray.splice(index, 1);
-  // ideaArray = parsedideaArray;
-
-  //named function for storing in localStorage
-  var ideaArrayFromLS = JSON.stringify(ideaArray);
-  localStorage.setItem('ideaArray', ideaArrayFromLS);
+  // use named functions to deal with localStorage
+  var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
+  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
 
   // make its own function
-    $(this).closest('article').remove();
+  $(this).closest('article').remove();
+
+  localStorage.removeItem(key);
 });
 
 // UPVOTE BUTTON EVENT LISTENER
