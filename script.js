@@ -113,7 +113,9 @@ $('.idea-input-save-button').on('click', function(e) {
 
   var ideaInputTitle = $('.idea-input-title').val();
   var ideaInputBody = $('.idea-input-body').val();
+
   var newIdea = new Idea(ideaInputTitle, ideaInputBody);
+
 
   createBox(newIdea);
 
