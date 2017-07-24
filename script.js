@@ -91,19 +91,7 @@ $('.idea-input-save-button').on('click', saveInput);
 
 
 // SEARCH BAR EVENT LISTENER
-$('.search-bar-input').keyup(function (e) {
-  e.preventDefault();
-  var currentInputField = $(this).val();
-  var matchingIdeas = ideaArray.filter(function(element){
-  return element.title.includes(currentInputField) || element.body.includes(currentInputField);
-  })
-
-  // change below to only remove non-matching cards
-  $('.idea-box').remove();
-  for(var i = 0; i < matchingIdeas.length; i++){
-    createBox(matchingIdeas[i]);
-  }
-})
+$('.search-bar-input').keyup(searchCards);
 
 // DELETE BUTTON EVENT LISTENER
 $('.bottom').on('click', '.idea-box-delete-button', function(){
@@ -284,4 +272,18 @@ $('.bottom').prepend(`
  function findObjectByKeyInLocalStorage(key) {
    var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
    var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+ }
+
+ function searchCards(e) {
+   e.preventDefault();
+   var currentInputField = $(this).val();
+   var matchingIdeas = ideaArray.filter(function(element){
+   return element.title.includes(currentInputField) || element.body.includes(currentInputField);
+   })
+
+   // change below to only remove non-matching cards
+   $('.idea-box').remove();
+   for(var i = 0; i < matchingIdeas.length; i++){
+     createBox(matchingIdeas[i]);
+   }
  }
