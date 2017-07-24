@@ -30,13 +30,24 @@
 // ON PAGE LOAD
 // look at localStorage functions to avoid global array variable
 
+// functions that still utilize global variable:
+// SEARCH BAR EVENT LISTENER
+// DELETE BUTTON EVENT LISTENER
+// UPVOTE BUTTON EVENT LISTENER
+// DOWNVOTE BUTTON EVENT LISTENER
+// BODY EDIT EVENT LISTENER
+// TITLE EDIT EVENT LISTENER
+
+populateDom();
 
 
-pullideaArrayFromLocalStorage();
-
-// $(function () {
-  loadSavedIdeas();
-// });
+function populateDom() {
+  var objectKeys = Object.keys(localStorage);
+  console.log(objectKeys)
+  objectKeys.forEach(function (uniqueId) {
+    createBox(JSON.parse(localStorage[uniqueId]));
+  });
+}
 
 // refactor to take arguments (title, body, quality)
 function Idea() {
@@ -287,33 +298,4 @@ $('.bottom').prepend(`
     </div>
   </article>
   `);
-}
-
-
-
-// look at the funtions below to avoid global array variable
-// reconsider names & reuse elsewhere in code
-function pushIdeaToLocalStorage(newIdea) {
-  localStorage.setItem(newIdea.id, JSON.stringify(newIdea));
-};
-
-function pullideaArrayFromLocalStorage() {
-  var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
-  if(ideaArrayPulledFromLocalStorage != null){
-    var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-    ideaArray = parsedideaArray;
-  }
-}
-
-function loadSavedIdeas (){
-  if (localStorage.getItem('ideaArray') !== null){
-
-    // use named function below: pushideaArrayToLocalStorage
-    var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
-    var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-
-    for(var i = 0; i < parsedideaArray.length; i++) {
-      createBox(parsedideaArray[i]);
-    }
-  }
 }
