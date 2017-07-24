@@ -65,14 +65,10 @@ function Idea(title, body, quality) {
    // make all of these named functions
    // can we combine into a single function??? (Jen)
 
-// INPUT FIELD EVENT LISTENER
-  $(".idea-input-title").keyup(function() {
-  $(".idea-input-save-button").prop("disabled", !this.value);
-});
-
-  $(".idea-input-body").keyup(function() {
-  $(".idea-input-save-button").prop("disabled", !this.value);
-});
+// DISABLE SAVE BUTTON & INPUT FIELD EVENT LISTENERS
+  $(".idea-input-save-button").attr("disabled", true);
+  $(".idea-input-title").keyup(enableSaveButton);
+  $(".idea-input-body").keyup(enableSaveButton);
 
 
 
@@ -288,4 +284,10 @@ $('.bottom').prepend(`
    $('.idea-input-title').val('');
    $('.idea-input-body').val('');
    $('.idea-input-title').focus();
+ }
+
+ function enableSaveButton(e){
+   if($(".idea-input-title").val() != "" && $(".idea-input-body").val() != ""){
+     $(".idea-input-save-button").attr("disabled", false);
+   }
  }
