@@ -108,24 +108,7 @@ $('.bottom').on('mouseleave', '.idea-box-downvote-button', function() {
 
 
 // SAVE BUTTON EVENT
-$('.idea-input-save-button').on('click', function(e) {
-  e.preventDefault();
-
-  var ideaInputTitle = $('.idea-input-title').val();
-  var ideaInputBody = $('.idea-input-body').val();
-  var newIdea = new Idea(ideaInputTitle, ideaInputBody);
-
-  createBox(newIdea);
-
-  localStorage.setItem(newIdea.id, JSON.stringify(newIdea));
-
-
-  // make below function to clear input fields and focus on title
-  $('.idea-input-title').val('');
-  $('.idea-input-body').val('');
-  $('.idea-input-title').focus();
-
-});
+$('.idea-input-save-button').on('click', saveInput);
 
 // SEARCH BAR EVENT LISTENER
 $('.search-bar-input').keyup(function (e) {
@@ -289,3 +272,20 @@ $('.bottom').prepend(`
   </article>
   `);
 }
+ function saveInput(e){
+   e.preventDefault();
+
+   var ideaInputTitle = $('.idea-input-title').val();
+   var ideaInputBody = $('.idea-input-body').val();
+   var newIdea = new Idea(ideaInputTitle, ideaInputBody);
+
+   createBox(newIdea);
+
+   localStorage.setItem(newIdea.id, JSON.stringify(newIdea));
+
+
+   // make below function to clear input fields and focus on title
+   $('.idea-input-title').val('');
+   $('.idea-input-body').val('');
+   $('.idea-input-title').focus();
+ }
