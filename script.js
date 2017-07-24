@@ -53,17 +53,12 @@ function populateDom() {
 // refactor to take arguments (title, body, quality)
 function Idea() {
   // thid.id = generateID();
-  this.id = '';
+  this.id = Date.now();
   this.title = '';
   this.body = '';
   this.quality = 'swill';
 }
 
-// use date/time string for below (Nick (give more control over ID--less random))
-// http://www.frontcoded.com/javascript-create-unique-ids.html
-Idea.prototype.generateID = function() {
-  this.id = '' + Math.random().toString(36).substr(2,16);
-};
 
 /* -------------------
    - EVENT LISTENERS -
