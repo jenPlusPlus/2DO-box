@@ -104,7 +104,9 @@ $('.bottom').on('mouseleave', '.idea-box-downvote-button', function() {
 
 
 // SAVE BUTTON EVENT
+
 $('.idea-input-save-button').on('click', saveInput);
+
 
 // SEARCH BAR EVENT LISTENER
 $('.search-bar-input').keyup(function (e) {
