@@ -65,14 +65,10 @@ function Idea(title, body, quality) {
    // make all of these named functions
    // can we combine into a single function??? (Jen)
 
-// INPUT FIELD EVENT LISTENER
-  $(".idea-input-title").keyup(function() {
-  $(".idea-input-save-button").prop("disabled", !this.value);
-});
-
-  $(".idea-input-body").keyup(function() {
-  $(".idea-input-save-button").prop("disabled", !this.value);
-});
+// DISABLE SAVE BUTTON & INPUT FIELD EVENT LISTENERS
+  $(".idea-input-save-button").attr("disabled", true);
+  $(".idea-input-title").keyup(enableSaveButton);
+  $(".idea-input-body").keyup(enableSaveButton);
 
 
 
@@ -108,26 +104,9 @@ $('.bottom').on('mouseleave', '.idea-box-downvote-button', function() {
 
 
 // SAVE BUTTON EVENT
-$('.idea-input-save-button').on('click', function(e) {
-  e.preventDefault();
 
-  var ideaInputTitle = $('.idea-input-title').val();
-  var ideaInputBody = $('.idea-input-body').val();
+$('.idea-input-save-button').on('click', saveInput);
 
-  var newIdea = new Idea(ideaInputTitle, ideaInputBody);
-
-
-  createBox(newIdea);
-
-  localStorage.setItem(newIdea.id, JSON.stringify(newIdea));
-
-
-  // make below function to clear input fields and focus on title
-  $('.idea-input-title').val('');
-  $('.idea-input-body').val('');
-  $('.idea-input-title').focus();
-
-});
 
 // SEARCH BAR EVENT LISTENER
 $('.search-bar-input').keyup(function (e) {
@@ -291,3 +270,26 @@ $('.bottom').prepend(`
   </article>
   `);
 }
+ function saveInput(e){
+   e.preventDefault();
+
+   var ideaInputTitle = $('.idea-input-title').val();
+   var ideaInputBody = $('.idea-input-body').val();
+   var newIdea = new Idea(ideaInputTitle, ideaInputBody);
+
+   createBox(newIdea);
+
+   localStorage.setItem(newIdea.id, JSON.stringify(newIdea));
+
+
+   // make below function to clear input fields and focus on title
+   $('.idea-input-title').val('');
+   $('.idea-input-body').val('');
+   $('.idea-input-title').focus();
+ }
+
+ function enableSaveButton(e){
+   if($(".idea-input-title").val() != "" && $(".idea-input-body").val() != ""){
+     $(".idea-input-save-button").attr("disabled", false);
+   }
+ }
