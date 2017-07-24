@@ -57,31 +57,16 @@ populateDom();
 // BUTTON HOVER EVENT LISTENER (on cards)
 // better to do in css or named functions in JS??? (do research)
 // delete
-$('.bottom').on('mouseover', '.idea-box-delete-button', function() {
-  $(this).prop("src", "images/delete-hover.svg");
-})
-
-$('.bottom').on('mouseleave', '.idea-box-delete-button', function() {
-  $(this).prop("src", "images/delete.svg");
-})
+$('.bottom').on('mouseover', '.idea-box-delete-button', deleteHoverOn);
+$('.bottom').on('mouseleave', '.idea-box-delete-button', deleteHoverOff);
 
 // upvote
-$('.bottom').on('mouseover', '.idea-box-upvote-button', function() {
-  $(this).prop("src", "images/upvote-hover.svg");
-})
-
-$('.bottom').on('mouseleave', '.idea-box-upvote-button', function() {
-  $(this).prop("src", "images/upvote.svg");
-})
+$('.bottom').on('mouseover', '.idea-box-upvote-button', upvoteHoverOn);
+$('.bottom').on('mouseleave', '.idea-box-upvote-button', upvoteHoverOff);
 
 // downvote
-$('.bottom').on('mouseover', '.idea-box-downvote-button', function() {
-  $(this).prop("src", "images/downvote-hover.svg");
-})
-
-$('.bottom').on('mouseleave', '.idea-box-downvote-button', function() {
-  $(this).prop("src", "images/downvote.svg");
-})
+$('.bottom').on('mouseover', '.idea-box-downvote-button', downvoteHoverOn);
+$('.bottom').on('mouseleave', '.idea-box-downvote-button', downvoteHoverOff);
 
 
 
@@ -286,4 +271,28 @@ $('.bottom').prepend(`
    for(var i = 0; i < matchingIdeas.length; i++){
      createBox(matchingIdeas[i]);
    }
+ }
+
+ function deleteHoverOn(e) {
+   $(this).prop("src", "images/delete-hover.svg");
+ }
+
+ function deleteHoverOff(e) {
+   $(this).prop("src", "images/delete.svg");
+ }
+
+ function upvoteHoverOn(e) {
+   $(this).prop("src", "images/upvote-hover.svg");
+ }
+
+ function upvoteHoverOff(e){
+   $(this).prop("src", "images/upvote.svg");
+ }
+
+ function downvoteHoverOn(e) {
+   $(this).prop("src", "images/downvote-hover.svg");
+ }
+
+ function downvoteHoverOff(e) {
+   $(this).prop("src", "images/downvote.svg");
  }
