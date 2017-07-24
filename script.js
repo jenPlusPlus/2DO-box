@@ -57,6 +57,11 @@ function Idea(title, body, quality) {
   this.quality = quality || 'swill';
 }
 
+function findObjectByKeyInLocalStorage(key) {
+  var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
+  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+}
+
 
 /* -------------------
    - EVENT LISTENERS -
@@ -125,17 +130,10 @@ $('.search-bar-input').keyup(function (e) {
 
 // DELETE BUTTON EVENT LISTENER
 $('.bottom').on('click', '.idea-box-delete-button', function(){
-
-  // create function to find index (use for upvote & downvote)
   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-
-  // use named functions to deal with localStorage
-  var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
-  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-
+  findObjectByKeyInLocalStorage(key);
   // make its own function
   $(this).closest('article').remove();
-
   localStorage.removeItem(key);
 });
 
