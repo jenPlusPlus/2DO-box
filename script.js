@@ -40,29 +40,6 @@
 
 populateDom();
 
-
-function populateDom() {
-  var objectKeys = Object.keys(localStorage);
-  console.log(objectKeys)
-  objectKeys.forEach(function (uniqueId) {
-    createBox(JSON.parse(localStorage[uniqueId]));
-  });
-}
-
-// refactor to take arguments (title, body, quality)
-function Idea(title, body, quality) {
-  this.id = Date.now();
-  this.title = title;
-  this.body = body;
-  this.quality = quality || 'swill';
-}
-
-function findObjectByKeyInLocalStorage(key) {
-  var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
-  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-}
-
-
 /* -------------------
    - EVENT LISTENERS -
    ------------------- */
@@ -287,4 +264,24 @@ $('.bottom').prepend(`
 
  function focusOnTitle() {
    $('.idea-input-title').focus();
+ }
+
+ function populateDom() {
+   var objectKeys = Object.keys(localStorage);
+   console.log(objectKeys)
+   objectKeys.forEach(function (uniqueId) {
+     createBox(JSON.parse(localStorage[uniqueId]));
+   });
+ }
+
+ function Idea(title, body, quality) {
+   this.id = Date.now();
+   this.title = title;
+   this.body = body;
+   this.quality = quality || 'swill';
+ }
+
+ function findObjectByKeyInLocalStorage(key) {
+   var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
+   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
  }
