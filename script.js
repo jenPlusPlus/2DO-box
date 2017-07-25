@@ -129,10 +129,11 @@ $('.bottom').prepend(`
     <div class="idea-box-bottom-line">
       <img class="idea-box-upvote-button icon" src="images/upvote.svg" alt="upvote button" />
       <img class="idea-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" />
-      <p class="idea-box-quality">quality: <span class="idea-box-quality-value">${idea.quality}</span></p>
+      <p class="idea-box-quality">quality: <span class="idea-box-quality-value">swill</span></p>
     </div>
   </article>
   `);
+  setQualityState(idea.id);
 }
  function saveInput(e){
    e.preventDefault();
@@ -141,9 +142,9 @@ $('.bottom').prepend(`
    var ideaInputBody = $('.idea-input-body').val();
    var newIdea = new Idea(ideaInputTitle, ideaInputBody);
 
+   saveToLocalStorage(newIdea);
    createBox(newIdea);
 
-   localStorage.setItem(newIdea.id, JSON.stringify(newIdea));
 
   clearInputFields()
   focusOnTitle()
@@ -176,12 +177,13 @@ $('.bottom').prepend(`
    this.id = Date.now();
    this.title = title;
    this.body = body;
-   this.quality = quality || 'swill';
+   this.quality = quality || 0;
  }
 
  function findObjectByKeyInLocalStorage(key) {
-   var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
-   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+   var ideaFromLocalStorage = localStorage.getItem(key);
+   var parsedIdea = JSON.parse(ideaFromLocalStorage);
+   return parsedIdea;
  }
 
  function searchCards(e) {
@@ -231,58 +233,39 @@ $('.bottom').prepend(`
  }
 
  function upvoteIdea(e) {
-   // use named functions to deal with localStorage
-   var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
-   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-
-   // create function to find index (use for upvote & downvote)
-   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-   var index = parsedideaArray.findIndex(function(element){
-     return element.id === key;
-   })
-
-   if (parsedideaArray[index].quality === 'swill') {
-     parsedideaArray[index].quality = 'plausible';
-     $(this).closest('div').find('span').text('plausible');
-     ideaArray = parsedideaArray;
-     pushideaArrayToLocalStorage();
-
-   } else if (parsedideaArray[index].quality === 'plausible'){
-       parsedideaArray[index].quality = 'genius';
-       $(this).closest('div').find('span').text('genius');
-       ideaArray = parsedideaArray;
-       pushideaArrayToLocalStorage();
-   }
+   var key = findCardKey(e);
+   var idea = findObjectByKeyInLocalStorage(key);
+   idea.quality = idea.quality + 1;
+    if(idea.quality > 2){
+      idea.quality = 2;
+    }
+   saveToLocalStorage(idea);
+   setQualityState(key);
  }
 
  function downvoteIdea(e) {
-   // use named functions to deal with localStorage
-  //  var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
-  //  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-
-   // create function to find index (use for upvote & downvote)
    var key = findCardKey(e);
-   console.log(key);
-  //  $(this).closest('article').find('.idea-box-id-hidden').text();
-  //  var index = parsedideaArray.findIndex(function(element){
-  //    return element.id === key;
+   var idea = findObjectByKeyInLocalStorage(key);
+   idea.quality = idea.quality - 1;
+    if(idea.quality < 0){
+      idea.quality = 0;
+    }
+   saveToLocalStorage(idea);
+   setQualityState(key);
    }
-
- // use array for below (Jen)
-  //  if (parsedideaArray[index].quality === 'genius') {
-  //    parsedideaArray[index].quality = 'plausible';
-  //    $(this).closest('div').find('span').text('plausible');
-  //    ideaArray = parsedideaArray;
-  //    pushideaArrayToLocalStorage();
-  //  } else if (parsedideaArray[index].quality === 'plausible'){
-  //      parsedideaArray[index].quality = 'swill';
-  //      $(this).closest('div').find('span').text('swill');
-  //      ideaArray = parsedideaArray;
-  //      pushideaArrayToLocalStorage();
-  //  }
-
 
  function findCardKey(e) {
    var ideaCardId = $(e.target).closest('article').find('.idea-box-id-hidden').text();
    return ideaCardId;
+ }
+
+ function setQualityState(key) {
+   var idea = findObjectByKeyInLocalStorage(key);
+   var qualities = ['swill', 'plausible', 'genius'];
+   var article = $('.idea-box-quality').find('.idea-box-quality-value');
+   article.text(qualities[idea.quality]);
+ }
+
+ function saveToLocalStorage(idea) {
+   localStorage.setItem(idea.id, JSON.stringify(idea));
  }
