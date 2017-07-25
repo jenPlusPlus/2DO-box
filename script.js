@@ -103,22 +103,14 @@ $('.bottom').on('click', '.idea-box-header', function() {
 // BODY EDIT EVENT LISTENER
 // use html attribute instead
 $('.bottom').on('click', '.idea-box-text', function() {
-  ($(this).prop("contenteditable") === true) ? null: $(this).prop("contenteditable", true);
-
   $(this).on('blur', function() {
     // use named function
-   var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
-   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-
-   // use find key function
    var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-   var index = parsedideaArray.findIndex(function(element){
-     return element.id === key;
-   })
-
-   parsedideaArray[index].body = $(this).text();
-   ideaArray = parsedideaArray;
-   pushideaArrayToLocalStorage();
+   var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
+   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+   parsedideaArray.body = $(this).text();
+   var stringedCard = JSON.stringify(parsedideaArray)
+   localStorage.setItem(key, stringedCard)
  })
 })
 
@@ -133,7 +125,7 @@ $('.bottom').prepend(`
       <h2 class="idea-box-header" contenteditable=true>${idea.title}</h2>
       <img class="idea-box-delete-button icon" src="images/delete.svg" alt="delete button" />
     </div>
-    <p class="idea-box-text">${idea.body}</p>
+    <p class="idea-box-text" contenteditable=true>${idea.body}</p>
     <div class="idea-box-bottom-line">
       <img class="idea-box-upvote-button icon" src="images/upvote.svg" alt="upvote button" />
       <img class="idea-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" />
