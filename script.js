@@ -257,25 +257,32 @@ $('.bottom').prepend(`
 
  function downvoteIdea(e) {
    // use named functions to deal with localStorage
-   var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
-   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+  //  var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
+  //  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
 
    // create function to find index (use for upvote & downvote)
-   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-   var index = parsedideaArray.findIndex(function(element){
-     return element.id === key;
-   })
+   var key = findCardKey(e);
+   console.log(key);
+  //  $(this).closest('article').find('.idea-box-id-hidden').text();
+  //  var index = parsedideaArray.findIndex(function(element){
+  //    return element.id === key;
+   }
 
  // use array for below (Jen)
-   if (parsedideaArray[index].quality === 'genius') {
-     parsedideaArray[index].quality = 'plausible';
-     $(this).closest('div').find('span').text('plausible');
-     ideaArray = parsedideaArray;
-     pushideaArrayToLocalStorage();
-   } else if (parsedideaArray[index].quality === 'plausible'){
-       parsedideaArray[index].quality = 'swill';
-       $(this).closest('div').find('span').text('swill');
-       ideaArray = parsedideaArray;
-       pushideaArrayToLocalStorage();
-   }
+  //  if (parsedideaArray[index].quality === 'genius') {
+  //    parsedideaArray[index].quality = 'plausible';
+  //    $(this).closest('div').find('span').text('plausible');
+  //    ideaArray = parsedideaArray;
+  //    pushideaArrayToLocalStorage();
+  //  } else if (parsedideaArray[index].quality === 'plausible'){
+  //      parsedideaArray[index].quality = 'swill';
+  //      $(this).closest('div').find('span').text('swill');
+  //      ideaArray = parsedideaArray;
+  //      pushideaArrayToLocalStorage();
+  //  }
+
+
+ function findCardKey(e) {
+   var ideaCardId = $(e.target).closest('article').find('.idea-box-id-hidden').text();
+   return ideaCardId;
  }
