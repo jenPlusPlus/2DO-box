@@ -284,6 +284,6 @@ $('.bottom').prepend(`
 
 
  function findCardKey(e) {
-   var ideaCardId = $(e.target).parent().parent().find(".idea-box-id-hidden").text();
+   var ideaCardId = $(e.target).closest('article').find('.idea-box-id-hidden').text();
    return ideaCardId;
  }
