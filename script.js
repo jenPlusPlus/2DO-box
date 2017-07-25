@@ -88,25 +88,15 @@ $('.bottom').on('click','.idea-box-downvote-button', downvoteIdea);
 // TITLE EDIT EVENT LISTENER
   //  ternary conditional??? (use html attribute instead)
 $('.bottom').on('click', '.idea-box-header', function() {
-   $(this).prop("contenteditable") === true ? null : $(this).prop("contenteditable", true);
 
-
-//
    $(this).on('blur', function() {
      // use named function
-      var ideaArrayPulledFromLocalStorage = localStorage.getItem('ideaArray');
-      var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-
-      // use find key function
-      var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-      var index = parsedideaArray.findIndex(function(element){
-        return element.id === key;
-      })
-
-      // edit localStorage directly
-    parsedideaArray[index].title = $(this).text();
-    ideaArray = parsedideaArray;
-    pushideaArrayToLocalStorage();
+    var key = $(this).closest('article').find('.idea-box-id-hidden').text();
+    var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
+    var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+    parsedideaArray.title = $(this).text();
+    var stringedCard = JSON.stringify(parsedideaArray)
+    localStorage.setItem(key, stringedCard)
   })
 })
 
@@ -140,7 +130,7 @@ $('.bottom').prepend(`
   <article class="idea-box">
     <p class="idea-box-id-hidden">${idea.id}</p>
     <div class="idea-box-top-line">
-      <h2 class="idea-box-header">${idea.title}</h2>
+      <h2 class="idea-box-header" contenteditable=true>${idea.title}</h2>
       <img class="idea-box-delete-button icon" src="images/delete.svg" alt="delete button" />
     </div>
     <p class="idea-box-text">${idea.body}</p>
