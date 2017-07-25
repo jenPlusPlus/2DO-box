@@ -75,7 +75,7 @@ $('.bottom').on('mouseleave', '.idea-box-downvote-button', downvoteHoverOff);
 $('.idea-input-save-button').on('click', saveInput);
 
 // SEARCH BAR EVENT LISTENER
-$('.search-bar-input').keyup(searchCards);
+$('.search-bar-input').on('keyup', runSearch);
 
 // DELETE BUTTON EVENT LISTENER
 $('.bottom').on('click', '.idea-box-delete-button', deleteIdea);
@@ -168,7 +168,6 @@ $('.bottom').prepend(`
 
  function populateDom() {
    var objectKeys = Object.keys(localStorage);
-   console.log(objectKeys)
    objectKeys.forEach(function (uniqueId) {
      createBox(JSON.parse(localStorage[uniqueId]));
    });
@@ -187,19 +186,21 @@ $('.bottom').prepend(`
    return parsedIdea;
  }
 
- function searchCards(e) {
-   e.preventDefault();
-   var currentInputField = $(this).val();
-   var matchingIdeas = ideaArray.filter(function(element){
-   return element.title.includes(currentInputField) || element.body.includes(currentInputField);
-   })
-
-   // change below to only remove non-matching cards
-   $('.idea-box').remove();
-   for(var i = 0; i < matchingIdeas.length; i++){
-     createBox(matchingIdeas[i]);
-   }
- }
+function runSearch(e) {
+  var indexCardArray = [];
+  var objectKeys = Object.keys(localStorage);
+  objectKeys.forEach(function (id) {
+    indexCardArray.push(JSON.parse(localStorage[id]));
+  });
+  var search = $(this).val().toUpperCase();
+  var searchedArray = indexCardArray.filter(function (newIndexCard) {
+    return newIndexCard.title.toUpperCase().includes(search) || newIndexCard.body.toUpperCase().includes(search);
+  });
+  $('.bottom').empty();
+  for (var i = 0; i < searchedArray.length; i++) {
+    createBox(searchedArray[i]);
+  }
+}
 
  function deleteHoverOn(e) {
    $(this).prop("src", "images/delete-hover.svg");
