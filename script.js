@@ -56,6 +56,7 @@ populateDom();
 
 // BUTTON HOVER EVENT LISTENER (on cards)
 // better to do in css or named functions in JS??? (do research)
+// move to function that creates cards??
 // delete
 $('.bottom').on('mouseover', '.idea-box-delete-button', deleteHoverOn);
 $('.bottom').on('mouseleave', '.idea-box-delete-button', deleteHoverOff);
