@@ -86,6 +86,26 @@ $('.bottom').on('click','.idea-box-upvote-button', upvoteIdea);
 // DOWNVOTE BUTTON EVENT LISTENER
 $('.bottom').on('click','.idea-box-downvote-button', downvoteIdea);
 
+// TITLE EDIT EVENT LISTENER
+
+
+  //  ternary conditional??? (use html attribute instead)
+
+function saveTitle(e) {
+  e.preventDefault();
+  var key = findCardKey(e);
+  var idea = findObjectByKeyInLocalStorage(key);
+  idea.title = $(e.target).closest('h2').text();
+  saveToLocalStorage(idea);
+}
+
+function saveBody(e) {
+  e.preventDefault();
+  var key = findCardKey(e);
+  var idea = findObjectByKeyInLocalStorage(key);
+  idea.body = $(e.target).closest('.idea-box-text').text();
+  saveToLocalStorage(idea);
+}
 // edit html more javasciprt friendly also edit html class names
 // line 289 may need to change, if using array for quality
 function createBox (idea) {
