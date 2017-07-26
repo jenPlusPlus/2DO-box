@@ -120,12 +120,16 @@ $('.bottom').prepend(`
       <img class="todo-box-upvote-button icon" src="images/upvote.svg" alt="upvote button" />
       <img class="todo-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" />
       <p class="todo-box-quality">quality: <span class="todo-box-quality-value">swill</span></p>
+      <label><input type="checkbox" name="mark-as-completed" value="mark-as-completed">Mark as completed</label>
     </div>
   </article>
   `);
   setQualityState(todo.id);
   $('[data-id='+todo.id+']').on("blur", "h2", saveTitle);
   $('[data-id='+todo.id+']').on("blur", ".todo-box-text", saveBody);
+}
+
+function hideMarkedAsCompleted () {
 
 }
 
