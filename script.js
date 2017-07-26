@@ -92,24 +92,19 @@ $('.bottom').on('click','.idea-box-downvote-button', downvoteIdea);
   //  ternary conditional??? (use html attribute instead)
 
 function saveTitle(e) {
-   // use named function
   e.preventDefault();
   var key = findCardKey(e);
-  var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
-  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-  parsedideaArray.title = $(e.target).closest('h2').text();
-  var stringedCard = JSON.stringify(parsedideaArray)
-  localStorage.setItem(key, stringedCard);
+  var idea = findObjectByKeyInLocalStorage(key);
+  idea.title = $(e.target).closest('h2').text();
+  saveToLocalStorage(idea);
 }
 
 function saveBody(e) {
   e.preventDefault();
   var key = findCardKey(e);
-  var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
-  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-  parsedideaArray.body = $(e.target).closest('.idea-box-text').text();
-  var stringedCard = JSON.stringify(parsedideaArray)
-  localStorage.setItem(key, stringedCard);
+  var idea = findObjectByKeyInLocalStorage(key);
+  idea.body = $(e.target).closest('.idea-box-text').text();
+  saveToLocalStorage(idea);
 }
 
 // edit html more javasciprt friendly also edit html class names
