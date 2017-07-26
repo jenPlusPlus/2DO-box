@@ -235,7 +235,6 @@ function runSearch(e) {
  }
 
  function upvoteIdea(e) {
-   console.log('this is ',this);
    var key = findCardKey(e);
    var idea = findObjectByKeyInLocalStorage(key);
    idea.quality = idea.quality + 1;
