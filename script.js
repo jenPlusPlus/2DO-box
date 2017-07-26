@@ -106,7 +106,6 @@ function saveBody(e) {
   todo.body = $(e.target).closest('.todo-box-text').text();
   saveToLocalStorage(todo);
 }
-
 // edit html more javasciprt friendly also edit html class names
 // line 289 may need to change, if using array for quality
 function createBox (todo) {
@@ -129,6 +128,7 @@ $('.bottom').prepend(`
   $('[data-id='+todo.id+']').on("blur", ".todo-box-text", saveBody);
 
 }
+
  function saveInput(e){
    e.preventDefault();
 
@@ -166,11 +166,12 @@ $('.bottom').prepend(`
    });
  }
 
+
  function todo(title, body, quality) {
    this.id = Date.now();
    this.title = title;
    this.body = body;
-   this.quality = quality || 0;
+   this.importance = importance || 2;
  }
 
  function findObjectByKeyInLocalStorage(key) {
@@ -262,4 +263,25 @@ function runSearch(e) {
 
  function saveToLocalStorage(todo) {
    localStorage.setItem(todo.id, JSON.stringify(todo));
+ }
+
+ function saveTitle(e) {
+    // use named function
+   e.preventDefault();
+   var key = findCardKey(e);
+   var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
+   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+   parsedideaArray.title = $(e.target).closest('h2').text();
+   var stringedCard = JSON.stringify(parsedideaArray)
+   localStorage.setItem(key, stringedCard);
+ }
+
+ function saveBody(e) {
+   e.preventDefault();
+   var key = findCardKey(e);
+   var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
+   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+   parsedideaArray.body = $(e.target).closest('.idea-box-text').text();
+   var stringedCard = JSON.stringify(parsedideaArray)
+   localStorage.setItem(key, stringedCard);
  }
