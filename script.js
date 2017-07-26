@@ -21,9 +21,9 @@
 
   - Functions
     * createBox()
-    * pushideaArrayToLocalStorage()
-    * pullideaArrayFromLocalStorage()
-    * loadSavedIdeas()
+    * pushtodoArrayToLocalStorage()
+    * pulltodoArrayFromLocalStorage()
+    * loadSavedtodos()
 
 */
 
@@ -48,9 +48,9 @@ populateDom();
    // can we combine into a single function??? (Jen)
 
 // DISABLE SAVE BUTTON & INPUT FIELD EVENT LISTENERS
-  $(".idea-input-save-button").attr("disabled", true);
-  $(".idea-input-title").keyup(enableSaveButton);
-  $(".idea-input-body").keyup(enableSaveButton);
+  $(".todo-input-save-button").attr("disabled", true);
+  $(".todo-input-title").keyup(enableSaveButton);
+  $(".todo-input-body").keyup(enableSaveButton);
 
 
 
@@ -58,33 +58,33 @@ populateDom();
 // better to do in css or named functions in JS??? (do research)
 // move to function that creates cards??
 // delete
-$('.bottom').on('mouseover', '.idea-box-delete-button', deleteHoverOn);
-$('.bottom').on('mouseleave', '.idea-box-delete-button', deleteHoverOff);
+$('.bottom').on('mouseover', '.todo-box-delete-button', deleteHoverOn);
+$('.bottom').on('mouseleave', '.todo-box-delete-button', deleteHoverOff);
 
 // upvote
-$('.bottom').on('mouseover', '.idea-box-upvote-button', upvoteHoverOn);
-$('.bottom').on('mouseleave', '.idea-box-upvote-button', upvoteHoverOff);
+$('.bottom').on('mouseover', '.todo-box-upvote-button', upvoteHoverOn);
+$('.bottom').on('mouseleave', '.todo-box-upvote-button', upvoteHoverOff);
 
 // downvote
-$('.bottom').on('mouseover', '.idea-box-downvote-button', downvoteHoverOn);
-$('.bottom').on('mouseleave', '.idea-box-downvote-button', downvoteHoverOff);
+$('.bottom').on('mouseover', '.todo-box-downvote-button', downvoteHoverOn);
+$('.bottom').on('mouseleave', '.todo-box-downvote-button', downvoteHoverOff);
 
 
 
 // SAVE BUTTON EVENT
-$('.idea-input-save-button').on('click', saveInput);
+$('.todo-input-save-button').on('click', saveInput);
 
 // SEARCH BAR EVENT LISTENER
 $('.search-bar-input').on('keyup', runSearch);
 
 // DELETE BUTTON EVENT LISTENER
-$('.bottom').on('click', '.idea-box-delete-button', deleteIdea);
+$('.bottom').on('click', '.todo-box-delete-button', deletetodo);
 
 // UPVOTE BUTTON EVENT LISTENER
-$('.bottom').on('click','.idea-box-upvote-button', upvoteIdea);
+$('.bottom').on('click','.todo-box-upvote-button', upvotetodo);
 
 // DOWNVOTE BUTTON EVENT LISTENER
-$('.bottom').on('click','.idea-box-downvote-button', downvoteIdea);
+$('.bottom').on('click','.todo-box-downvote-button', downvotetodo);
 
 // TITLE EDIT EVENT LISTENER
 
@@ -94,50 +94,50 @@ $('.bottom').on('click','.idea-box-downvote-button', downvoteIdea);
 function saveTitle(e) {
   e.preventDefault();
   var key = findCardKey(e);
-  var idea = findObjectByKeyInLocalStorage(key);
-  idea.title = $(e.target).closest('h2').text();
-  saveToLocalStorage(idea);
+  var todo = findObjectByKeyInLocalStorage(key);
+  todo.title = $(e.target).closest('h2').text();
+  saveToLocalStorage(todo);
 }
 
 function saveBody(e) {
   e.preventDefault();
   var key = findCardKey(e);
-  var idea = findObjectByKeyInLocalStorage(key);
-  idea.body = $(e.target).closest('.idea-box-text').text();
-  saveToLocalStorage(idea);
+  var todo = findObjectByKeyInLocalStorage(key);
+  todo.body = $(e.target).closest('.todo-box-text').text();
+  saveToLocalStorage(todo);
 }
 
 // edit html more javasciprt friendly also edit html class names
 // line 289 may need to change, if using array for quality
-function createBox (idea) {
+function createBox (todo) {
 $('.bottom').prepend(`
-  <article class="idea-box" data-id=${idea.id}>
-    <div class="idea-box-top-line">
-      <h2 class="idea-box-header" contenteditable=true>${idea.title}</h2>
-      <img class="idea-box-delete-button icon" src="images/delete.svg" alt="delete button" />
+  <article class="todo-box" data-id=${todo.id}>
+    <div class="todo-box-top-line">
+      <h2 class="todo-box-header" contenteditable=true>${todo.title}</h2>
+      <img class="todo-box-delete-button icon" src="images/delete.svg" alt="delete button" />
     </div>
-    <p class="idea-box-text" contenteditable=true>${idea.body}</p>
-    <div class="idea-box-bottom-line">
-      <img class="idea-box-upvote-button icon" src="images/upvote.svg" alt="upvote button" />
-      <img class="idea-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" />
-      <p class="idea-box-quality">quality: <span class="idea-box-quality-value">swill</span></p>
+    <p class="todo-box-text" contenteditable=true>${todo.body}</p>
+    <div class="todo-box-bottom-line">
+      <img class="todo-box-upvote-button icon" src="images/upvote.svg" alt="upvote button" />
+      <img class="todo-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" />
+      <p class="todo-box-quality">quality: <span class="todo-box-quality-value">swill</span></p>
     </div>
   </article>
   `);
-  setQualityState(idea.id);
-  $('[data-id='+idea.id+']').on("blur", "h2", saveTitle);
-  $('[data-id='+idea.id+']').on("blur", ".idea-box-text", saveBody);
+  setQualityState(todo.id);
+  $('[data-id='+todo.id+']').on("blur", "h2", saveTitle);
+  $('[data-id='+todo.id+']').on("blur", ".todo-box-text", saveBody);
 
 }
  function saveInput(e){
    e.preventDefault();
 
-   var ideaInputTitle = $('.idea-input-title').val();
-   var ideaInputBody = $('.idea-input-body').val();
-   var newIdea = new Idea(ideaInputTitle, ideaInputBody);
+   var todoInputTitle = $('.todo-input-title').val();
+   var todoInputBody = $('.todo-input-body').val();
+   var newtodo = new todo(todoInputTitle, todoInputBody);
 
-   saveToLocalStorage(newIdea);
-   createBox(newIdea);
+   saveToLocalStorage(newtodo);
+   createBox(newtodo);
 
 
   clearInputFields()
@@ -145,18 +145,18 @@ $('.bottom').prepend(`
  }
 
  function enableSaveButton(e){
-   if($(".idea-input-title").val() != "" && $(".idea-input-body").val() != ""){
-     $(".idea-input-save-button").attr("disabled", false);
+   if($(".todo-input-title").val() != "" && $(".todo-input-body").val() != ""){
+     $(".todo-input-save-button").attr("disabled", false);
    }
  }
 
  function clearInputFields() {
-   $('.idea-input-title').val('');
-   $('.idea-input-body').val('');
+   $('.todo-input-title').val('');
+   $('.todo-input-body').val('');
  }
 
  function focusOnTitle() {
-   $('.idea-input-title').focus();
+   $('.todo-input-title').focus();
  }
 
  function populateDom() {
@@ -166,7 +166,7 @@ $('.bottom').prepend(`
    });
  }
 
- function Idea(title, body, quality) {
+ function todo(title, body, quality) {
    this.id = Date.now();
    this.title = title;
    this.body = body;
@@ -174,9 +174,9 @@ $('.bottom').prepend(`
  }
 
  function findObjectByKeyInLocalStorage(key) {
-   var ideaFromLocalStorage = localStorage.getItem(key);
-   var parsedIdea = JSON.parse(ideaFromLocalStorage);
-   return parsedIdea;
+   var todoFromLocalStorage = localStorage.getItem(key);
+   var parsedtodo = JSON.parse(todoFromLocalStorage);
+   return parsedtodo;
  }
 
 function runSearch(e) {
@@ -219,7 +219,7 @@ function runSearch(e) {
    $(this).prop("src", "images/downvote.svg");
  }
 
- function deleteIdea(e) {
+ function deletetodo(e) {
    var key = findCardKey(e);
    findObjectByKeyInLocalStorage(key);
    // make its own function
@@ -227,39 +227,39 @@ function runSearch(e) {
    localStorage.removeItem(key);
  }
 
- function upvoteIdea(e) {
+ function upvotetodo(e) {
    var key = findCardKey(e);
-   var idea = findObjectByKeyInLocalStorage(key);
-   idea.quality = idea.quality + 1;
-    if(idea.quality > 2){
-      idea.quality = 2;
+   var todo = findObjectByKeyInLocalStorage(key);
+   todo.quality = todo.quality + 1;
+    if(todo.quality > 2){
+      todo.quality = 2;
     }
-   saveToLocalStorage(idea);
+   saveToLocalStorage(todo);
    setQualityState(key);
  }
 
- function downvoteIdea(e) {
+ function downvotetodo(e) {
    var key = findCardKey(e);
-   var idea = findObjectByKeyInLocalStorage(key);
-   idea.quality = idea.quality - 1;
-    if(idea.quality < 0){
-      idea.quality = 0;
+   var todo = findObjectByKeyInLocalStorage(key);
+   todo.quality = todo.quality - 1;
+    if(todo.quality < 0){
+      todo.quality = 0;
     }
-   saveToLocalStorage(idea);
+   saveToLocalStorage(todo);
    setQualityState(key);
    }
 
  function findCardKey(e) {
-   var ideaCardId = $(e.target).closest("[data-id]").data("id");
-   return ideaCardId;
+   var todoCardId = $(e.target).closest("[data-id]").data("id");
+   return todoCardId;
  }
 
  function setQualityState(key) {
-   var idea = findObjectByKeyInLocalStorage(key);
+   var todo = findObjectByKeyInLocalStorage(key);
    var qualities = ['swill', 'plausible', 'genius'];
-  $('[data-id='+idea.id+']').find('.idea-box-quality-value').text(qualities[idea.quality]);
+  $('[data-id='+todo.id+']').find('.todo-box-quality-value').text(qualities[todo.quality]);
  }
 
- function saveToLocalStorage(idea) {
-   localStorage.setItem(idea.id, JSON.stringify(idea));
+ function saveToLocalStorage(todo) {
+   localStorage.setItem(todo.id, JSON.stringify(todo));
  }
