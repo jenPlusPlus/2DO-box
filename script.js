@@ -52,44 +52,11 @@ populateDom();
   $(".todo-input-title").keyup(enableSaveButton);
   $(".todo-input-body").keyup(enableSaveButton);
 
-
-
-// BUTTON HOVER EVENT LISTENER (on cards)
-// better to do in css or named functions in JS??? (do research)
-// move to function that creates cards??
-// delete
-$('.bottom').on('mouseover', '.todo-box-delete-button', deleteHoverOn);
-$('.bottom').on('mouseleave', '.todo-box-delete-button', deleteHoverOff);
-
-// upvote
-$('.bottom').on('mouseover', '.todo-box-upvote-button', upvoteHoverOn);
-$('.bottom').on('mouseleave', '.todo-box-upvote-button', upvoteHoverOff);
-
-// downvote
-$('.bottom').on('mouseover', '.todo-box-downvote-button', downvoteHoverOn);
-$('.bottom').on('mouseleave', '.todo-box-downvote-button', downvoteHoverOff);
-
-
-
 // SAVE BUTTON EVENT
 $('.todo-input-save-button').on('click', saveInput);
 
 // SEARCH BAR EVENT LISTENER
 $('.search-bar-input').on('keyup', runSearch);
-
-// DELETE BUTTON EVENT LISTENER
-$('.bottom').on('click', '.todo-box-delete-button', deletetodo);
-
-// UPVOTE BUTTON EVENT LISTENER
-$('.bottom').on('click','.todo-box-upvote-button', upvotetodo);
-
-// DOWNVOTE BUTTON EVENT LISTENER
-$('.bottom').on('click','.todo-box-downvote-button', downvotetodo);
-
-// TITLE EDIT EVENT LISTENER
-
-
-  //  ternary conditional??? (use html attribute instead)
 
 function saveTitle(e) {
   e.preventDefault();
@@ -119,12 +86,23 @@ $('.bottom').prepend(`
     <div class="todo-box-bottom-line">
       <img class="todo-box-upvote-button icon" src="images/upvote.svg" alt="upvote button" />
       <img class="todo-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" />
-      <p class="todo-box-quality">quality: <span class="todo-box-quality-value">swill</span></p>
-      <label><input type="checkbox" class="mark-as-completed" name="mark-as-completed" value="mark-as-completed">Mark as completed</label>
+
+      <p class="todo-box-quality">Importance: <span class="todo-box-quality-value">swill</span></p>
+      <label><input type="checkbox" name="mark-as-completed" value="mark-as-completed">Mark as completed</label>
     </div>
   </article>
   `);
   setQualityState(todo.id);
+  //move below to an addEventListenersToCard function
+  $('[data-id='+todo.id+']').on('mouseover', '.todo-box-delete-button', deleteHoverOn);
+  $('[data-id='+todo.id+']').on('mouseleave', '.todo-box-delete-button', deleteHoverOff);
+  $('[data-id='+todo.id+']').on('mouseover', '.todo-box-upvote-button', upvoteHoverOn);
+  $('[data-id='+todo.id+']').on('mouseleave', '.todo-box-upvote-button', upvoteHoverOff);
+  $('[data-id='+todo.id+']').on('mouseover', '.todo-box-downvote-button', downvoteHoverOn);
+  $('[data-id='+todo.id+']').on('mouseleave', '.todo-box-downvote-button', downvoteHoverOff);
+  $('[data-id='+todo.id+']').on('click', '.todo-box-delete-button', deletetodo);
+  $('[data-id='+todo.id+']').on('click','.todo-box-upvote-button', upvotetodo);
+  $('[data-id='+todo.id+']').on('click','.todo-box-downvote-button', downvotetodo);
   $('[data-id='+todo.id+']').on("blur", "h2", saveTitle);
   $('[data-id='+todo.id+']').on("blur", ".todo-box-text", saveBody);
 }
@@ -190,7 +168,7 @@ function hideMarkedAsCompleted () {
  }
 
 
- function todo(title, body, quality) {
+ function todo(title, body, importance) {
    this.id = Date.now();
    this.title = title;
    this.body = body;
@@ -252,11 +230,12 @@ function runSearch(e) {
  }
 
  function upvotetodo(e) {
+   console.log("upvoting");
    var key = findCardKey(e);
    var todo = findObjectByKeyInLocalStorage(key);
-   todo.quality = todo.quality + 1;
-    if(todo.quality > 2){
-      todo.quality = 2;
+   todo.importance = todo.importance + 1;
+    if(todo.importance > 4){
+      todo.importance = 4;
     }
    saveToLocalStorage(todo);
    setQualityState(key);
@@ -265,9 +244,9 @@ function runSearch(e) {
  function downvotetodo(e) {
    var key = findCardKey(e);
    var todo = findObjectByKeyInLocalStorage(key);
-   todo.quality = todo.quality - 1;
-    if(todo.quality < 0){
-      todo.quality = 0;
+   todo.importance = todo.importance - 1;
+    if(todo.importance < 0){
+      todo.importance = 0;
     }
    saveToLocalStorage(todo);
    setQualityState(key);
@@ -280,8 +259,8 @@ function runSearch(e) {
 
  function setQualityState(key) {
    var todo = findObjectByKeyInLocalStorage(key);
-   var qualities = ['swill', 'plausible', 'genius'];
-  $('[data-id='+todo.id+']').find('.todo-box-quality-value').text(qualities[todo.quality]);
+   var qualities = ['None', 'Low', 'Normal', 'High', 'Critical'];
+  $('[data-id='+todo.id+']').find('.todo-box-quality-value').text(qualities[todo.importance]);
  }
 
  function saveToLocalStorage(todo) {
