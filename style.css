@@ -232,6 +232,10 @@ font-weight: 700;
   font-family: 'Roboto Slab', serif;
 }
 
+.hidden {
+  display: none;
+}
+
 /* =================
    = MEDIA QUERIES =
    ================= */

@@ -120,7 +120,7 @@ $('.bottom').prepend(`
       <img class="todo-box-upvote-button icon" src="images/upvote.svg" alt="upvote button" />
       <img class="todo-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" />
       <p class="todo-box-quality">quality: <span class="todo-box-quality-value">swill</span></p>
-      <label><input type="checkbox" name="mark-as-completed" value="mark-as-completed">Mark as completed</label>
+      <label><input type="checkbox" class="mark-as-completed" name="mark-as-completed" value="mark-as-completed">Mark as completed</label>
     </div>
   </article>
   `);
@@ -129,9 +129,28 @@ $('.bottom').prepend(`
   $('[data-id='+todo.id+']').on("blur", ".todo-box-text", saveBody);
 }
 
-function hideMarkedAsCompleted () {
+$('.mark-as-completed').on('click', hideMarkedAsCompleted);
 
+function hideMarkedAsCompleted () {
+  var $checked = $(this)
+  var parent = $checked.parent();
+  var parentTwo = parent.parent();
+  var parentThree = parentTwo.parent();
+  parentThree.toggleClass('hidden')
 }
+
+// function showMe (box) {
+//     var chboxs = document.getElementsByName("c1");
+//     var vis = "none";
+//     for(var i=0;i<chboxs.length;i++) {
+//         if(chboxs[i].checked){
+//          vis = "block";
+//             break;
+//         }
+//     }
+//     document.getElementById(box).style.display = vis;
+// }
+// button.isEnabled()
 
  function saveInput(e){
    e.preventDefault();
