@@ -120,7 +120,7 @@ $('.bottom').on('click', '.idea-box-text', function() {
 // line 289 may need to change, if using array for quality
 function createBox (idea) {
 $('.bottom').prepend(`
-  <article class="idea-box">
+  <article class="idea-box" data-id=${idea.id}>
     <p class="idea-box-id-hidden">${idea.id}</p>
     <div class="idea-box-top-line">
       <h2 class="idea-box-header" contenteditable=true>${idea.title}</h2>
@@ -235,6 +235,7 @@ function runSearch(e) {
  }
 
  function upvoteIdea(e) {
+   console.log('this is ',this);
    var key = findCardKey(e);
    var idea = findObjectByKeyInLocalStorage(key);
    idea.quality = idea.quality + 1;
@@ -257,15 +258,15 @@ function runSearch(e) {
    }
 
  function findCardKey(e) {
-   var ideaCardId = $(e.target).closest('article').find('.idea-box-id-hidden').text();
+   var ideaCardId = $(e.target).closest("[data-id]").data("id");
+   console.log("ideaCardId is ", ideaCardId);
    return ideaCardId;
  }
 
  function setQualityState(key) {
    var idea = findObjectByKeyInLocalStorage(key);
    var qualities = ['swill', 'plausible', 'genius'];
-   var article = $('.idea-box-quality').find('.idea-box-quality-value');
-   article.text(qualities[idea.quality]);
+  $('[data-id='+idea.id+']').find('.idea-box-quality-value').text(qualities[idea.quality]);
  }
 
  function saveToLocalStorage(idea) {
