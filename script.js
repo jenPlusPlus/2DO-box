@@ -87,41 +87,36 @@ $('.bottom').on('click','.idea-box-upvote-button', upvoteIdea);
 $('.bottom').on('click','.idea-box-downvote-button', downvoteIdea);
 
 // TITLE EDIT EVENT LISTENER
+
+
   //  ternary conditional??? (use html attribute instead)
-$('.bottom').on('click', '.idea-box-header', function() {
 
-   $(this).on('blur', function() {
-     // use named function
-    var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-    var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
-    var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-    parsedideaArray.title = $(this).text();
-    var stringedCard = JSON.stringify(parsedideaArray)
-    localStorage.setItem(key, stringedCard)
-  })
-})
+function saveTitle(e) {
+   // use named function
+  e.preventDefault();
+  var key = findCardKey(e);
+  var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
+  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+  parsedideaArray.title = $(e.target).closest('h2').text();
+  var stringedCard = JSON.stringify(parsedideaArray)
+  localStorage.setItem(key, stringedCard);
+}
 
-// BODY EDIT EVENT LISTENER
-// use html attribute instead
-$('.bottom').on('click', '.idea-box-text', function() {
-  $(this).on('blur', function() {
-    // use named function
-   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
-   var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
-   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-   parsedideaArray.body = $(this).text();
-   var stringedCard = JSON.stringify(parsedideaArray)
-   localStorage.setItem(key, stringedCard)
- })
-})
+function saveBody(e) {
+  e.preventDefault();
+  var key = findCardKey(e);
+  var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
+  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+  parsedideaArray.body = $(e.target).closest('.idea-box-text').text();
+  var stringedCard = JSON.stringify(parsedideaArray)
+  localStorage.setItem(key, stringedCard);
+}
 
-// FUNCTIONS
 // edit html more javasciprt friendly also edit html class names
 // line 289 may need to change, if using array for quality
 function createBox (idea) {
 $('.bottom').prepend(`
   <article class="idea-box" data-id=${idea.id}>
-    <p class="idea-box-id-hidden">${idea.id}</p>
     <div class="idea-box-top-line">
       <h2 class="idea-box-header" contenteditable=true>${idea.title}</h2>
       <img class="idea-box-delete-button icon" src="images/delete.svg" alt="delete button" />
@@ -135,6 +130,9 @@ $('.bottom').prepend(`
   </article>
   `);
   setQualityState(idea.id);
+  $('[data-id='+idea.id+']').on("blur", "h2", saveTitle);
+  $('[data-id='+idea.id+']').on("blur", ".idea-box-text", saveBody);
+
 }
  function saveInput(e){
    e.preventDefault();
@@ -226,7 +224,7 @@ $('.bottom').prepend(`
  }
 
  function deleteIdea(e) {
-   var key = $(this).closest('article').find('.idea-box-id-hidden').text();
+   var key = findCardKey(e);
    findObjectByKeyInLocalStorage(key);
    // make its own function
    $(this).closest('article').remove();
@@ -257,7 +255,6 @@ $('.bottom').prepend(`
 
  function findCardKey(e) {
    var ideaCardId = $(e.target).closest("[data-id]").data("id");
-   console.log("ideaCardId is ", ideaCardId);
    return ideaCardId;
  }
 
