@@ -88,7 +88,7 @@ $('.bottom').prepend(`
       <img class="todo-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" />
 
       <p class="todo-box-quality">Importance: <span class="todo-box-quality-value">swill</span></p>
-      <label><input type="checkbox" name="mark-as-completed" value="mark-as-completed">Mark as completed</label>
+      <label><input type="checkbox" class="mark-as-completed" name="mark-as-completed" value="mark-as-completed">Mark as completed</label>
     </div>
   </article>
   `);
@@ -107,28 +107,39 @@ $('.bottom').prepend(`
   $('[data-id='+todo.id+']').on("blur", ".todo-box-text", saveBody);
 }
 
+// function hiddenStates () {
+//   if (todo.hidden === true) {
+//     $('article').toggleClass('hidden');
+//   }
+// }
+
 $('.mark-as-completed').on('click', hideMarkedAsCompleted);
 
-function hideMarkedAsCompleted () {
-  var $checked = $(this)
-  var parent = $checked.parent();
-  var parentTwo = parent.parent();
-  var parentThree = parentTwo.parent();
-  parentThree.toggleClass('hidden')
+function hideMarkedAsCompleted (e) {
+  var key = findCardKey(e);
+  var todo = findObjectByKeyInLocalStorage(key);
+  if (todo.hidden === false) {
+    todo.hidden = true;
+  } else {
+    todo.hidden = false;
+  };
+  hideCardsOnDom(todo);
+  saveToLocalStorage(todo);
 }
 
-// function showMe (box) {
-//     var chboxs = document.getElementsByName("c1");
-//     var vis = "none";
-//     for(var i=0;i<chboxs.length;i++) {
-//         if(chboxs[i].checked){
-//          vis = "block";
-//             break;
-//         }
-//     }
-//     document.getElementById(box).style.display = vis;
-// }
-// button.isEnabled()
+function hideCardsOnDom(todo){
+  if (todo.hidden === true) {
+    $('[data-id='+todo.id+']').toggleClass('hidden')
+  }
+}
+
+$('.show-completed').on('click', showCompletedTasks);
+
+function showCompletedTasks () {
+  $('.hidden').each(function(){
+    $(this).addClass('not-hidden')
+  })
+}
 
  function saveInput(e){
    e.preventDefault();
@@ -136,7 +147,7 @@ function hideMarkedAsCompleted () {
    var todoInputTitle = $('.todo-input-title').val();
    var todoInputBody = $('.todo-input-body').val();
    var newtodo = new todo(todoInputTitle, todoInputBody);
-
+   console.log(newtodo)
    saveToLocalStorage(newtodo);
    createBox(newtodo);
 
@@ -173,6 +184,7 @@ function hideMarkedAsCompleted () {
    this.title = title;
    this.body = body;
    this.importance = importance || 2;
+   this.hidden = false;
  }
 
  function findObjectByKeyInLocalStorage(key) {

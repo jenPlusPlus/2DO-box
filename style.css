@@ -236,6 +236,10 @@ font-weight: 700;
   display: none;
 }
 
+.not-hidden {
+  display: initial;
+}
+
 /* =================
    = MEDIA QUERIES =
    ================= */
