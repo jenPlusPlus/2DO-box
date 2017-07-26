@@ -86,32 +86,6 @@ $('.bottom').on('click','.idea-box-upvote-button', upvoteIdea);
 // DOWNVOTE BUTTON EVENT LISTENER
 $('.bottom').on('click','.idea-box-downvote-button', downvoteIdea);
 
-// TITLE EDIT EVENT LISTENER
-
-
-  //  ternary conditional??? (use html attribute instead)
-
-function saveTitle(e) {
-   // use named function
-  e.preventDefault();
-  var key = findCardKey(e);
-  var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
-  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-  parsedideaArray.title = $(e.target).closest('h2').text();
-  var stringedCard = JSON.stringify(parsedideaArray)
-  localStorage.setItem(key, stringedCard);
-}
-
-function saveBody(e) {
-  e.preventDefault();
-  var key = findCardKey(e);
-  var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
-  var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-  parsedideaArray.body = $(e.target).closest('.idea-box-text').text();
-  var stringedCard = JSON.stringify(parsedideaArray)
-  localStorage.setItem(key, stringedCard);
-}
-
 // edit html more javasciprt friendly also edit html class names
 // line 289 may need to change, if using array for quality
 function createBox (idea) {
@@ -125,7 +99,7 @@ $('.bottom').prepend(`
     <div class="idea-box-bottom-line">
       <img class="idea-box-upvote-button icon" src="images/upvote.svg" alt="upvote button" />
       <img class="idea-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" />
-      <p class="idea-box-quality">quality: <span class="idea-box-quality-value">swill</span></p>
+      <p class="idea-box-quality">Importance: <span class="idea-box-quality-value">swill</span></p>
     </div>
   </article>
   `);
@@ -134,6 +108,7 @@ $('.bottom').prepend(`
   $('[data-id='+idea.id+']').on("blur", ".idea-box-text", saveBody);
 
 }
+
  function saveInput(e){
    e.preventDefault();
 
@@ -171,11 +146,11 @@ $('.bottom').prepend(`
    });
  }
 
- function Idea(title, body, quality) {
+ function Idea(title, body, importance) {
    this.id = Date.now();
    this.title = title;
    this.body = body;
-   this.quality = quality || 0;
+   this.importance = importance || 2;
  }
 
  function findObjectByKeyInLocalStorage(key) {
@@ -235,9 +210,9 @@ function runSearch(e) {
  function upvoteIdea(e) {
    var key = findCardKey(e);
    var idea = findObjectByKeyInLocalStorage(key);
-   idea.quality = idea.quality + 1;
-    if(idea.quality > 2){
-      idea.quality = 2;
+   idea.importance = idea.importance + 1;
+    if(idea.importance > 4){
+      idea.importance = 4;
     }
    saveToLocalStorage(idea);
    setQualityState(key);
@@ -246,9 +221,9 @@ function runSearch(e) {
  function downvoteIdea(e) {
    var key = findCardKey(e);
    var idea = findObjectByKeyInLocalStorage(key);
-   idea.quality = idea.quality - 1;
-    if(idea.quality < 0){
-      idea.quality = 0;
+   idea.importance = idea.importance - 1;
+    if(idea.importance < 0){
+      idea.importance = 0;
     }
    saveToLocalStorage(idea);
    setQualityState(key);
@@ -261,10 +236,31 @@ function runSearch(e) {
 
  function setQualityState(key) {
    var idea = findObjectByKeyInLocalStorage(key);
-   var qualities = ['swill', 'plausible', 'genius'];
-  $('[data-id='+idea.id+']').find('.idea-box-quality-value').text(qualities[idea.quality]);
+   var importance = ['None', 'Low', 'Normal', 'High', 'Critical'];
+  $('[data-id='+idea.id+']').find('.idea-box-quality-value').text(importance[idea.importance]);
  }
 
  function saveToLocalStorage(idea) {
    localStorage.setItem(idea.id, JSON.stringify(idea));
+ }
+
+ function saveTitle(e) {
+    // use named function
+   e.preventDefault();
+   var key = findCardKey(e);
+   var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
+   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+   parsedideaArray.title = $(e.target).closest('h2').text();
+   var stringedCard = JSON.stringify(parsedideaArray)
+   localStorage.setItem(key, stringedCard);
+ }
+
+ function saveBody(e) {
+   e.preventDefault();
+   var key = findCardKey(e);
+   var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
+   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
+   parsedideaArray.body = $(e.target).closest('.idea-box-text').text();
+   var stringedCard = JSON.stringify(parsedideaArray)
+   localStorage.setItem(key, stringedCard);
  }
