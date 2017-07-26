@@ -268,24 +268,3 @@ function runSearch(e) {
  function saveToLocalStorage(todo) {
    localStorage.setItem(todo.id, JSON.stringify(todo));
  }
-
- function saveTitle(e) {
-    // use named function
-   e.preventDefault();
-   var key = findCardKey(e);
-   var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
-   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-   parsedideaArray.title = $(e.target).closest('h2').text();
-   var stringedCard = JSON.stringify(parsedideaArray)
-   localStorage.setItem(key, stringedCard);
- }
-
- function saveBody(e) {
-   e.preventDefault();
-   var key = findCardKey(e);
-   var ideaArrayPulledFromLocalStorage = localStorage.getItem(key);
-   var parsedideaArray = JSON.parse(ideaArrayPulledFromLocalStorage);
-   parsedideaArray.body = $(e.target).closest('.idea-box-text').text();
-   var stringedCard = JSON.stringify(parsedideaArray)
-   localStorage.setItem(key, stringedCard);
- }
