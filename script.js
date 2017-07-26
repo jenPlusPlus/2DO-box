@@ -92,6 +92,7 @@ $('.bottom').prepend(`
   </article>
   `);
   setQualityState(todo.id);
+  //move below to an addEventListenersToCard function
   $('[data-id='+todo.id+']').on('mouseover', '.todo-box-delete-button', deleteHoverOn);
   $('[data-id='+todo.id+']').on('mouseleave', '.todo-box-delete-button', deleteHoverOff);
   $('[data-id='+todo.id+']').on('mouseover', '.todo-box-upvote-button', upvoteHoverOn);
