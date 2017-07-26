@@ -127,6 +127,9 @@ $('.bottom').prepend(`
   setQualityState(todo.id);
   $('[data-id='+todo.id+']').on("blur", "h2", saveTitle);
   $('[data-id='+todo.id+']').on("blur", ".todo-box-text", saveBody);
+}
+
+function hideMarkedAsCompleted () {
 
 }
 
