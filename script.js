@@ -105,15 +105,9 @@ $('.bottom').prepend(`
   $('[data-id='+todo.id+']').on('click','.todo-box-downvote-button', downvotetodo);
   $('[data-id='+todo.id+']').on("blur", "h2", saveTitle);
   $('[data-id='+todo.id+']').on("blur", ".todo-box-text", saveBody);
+  $('.mark-as-completed').on('click', hideMarkedAsCompleted);
+  $('.show-completed').on('click', showCompletedTasks);
 }
-
-// function hiddenStates () {
-//   if (todo.hidden === true) {
-//     $('article').toggleClass('hidden');
-//   }
-// }
-
-$('.mark-as-completed').on('click', hideMarkedAsCompleted);
 
 function hideMarkedAsCompleted (e) {
   var key = findCardKey(e);
@@ -132,8 +126,6 @@ function hideCardsOnDom(todo){
     $('[data-id='+todo.id+']').toggleClass('hidden')
   }
 }
-
-$('.show-completed').on('click', showCompletedTasks);
 
 function showCompletedTasks () {
   $('.hidden').each(function(){
