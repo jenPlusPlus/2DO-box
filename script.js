@@ -127,6 +127,7 @@ function hideCardsOnDom(todo){
   if (todo.hidden === true) {
     $('[data-id='+todo.id+']').toggleClass('hidden')
 }
+}
 
 $('.show-completed').on('click', showCompletedTasks);
 
