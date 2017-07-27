@@ -91,8 +91,15 @@ function showCompletedTasks(e) {
     $('[data-id='+todo.id+']').find('.mark-as-completed').attr('checked', true);
     todo.hidden = false;
     saveToLocalStorage(todo);
+    grayCompletedTasks(todo);
     }
   });
+}
+
+function grayCompletedTasks(todo) {
+  if (todo.completed === true) {
+    $('[data-id='+todo.id+']').toggleClass('gray-out-todo')
+  }
 }
 
 function saveInput(e){
@@ -100,7 +107,6 @@ function saveInput(e){
   var todoInputTitle = $('.todo-input-title').val();
   var todoInputBody = $('.todo-input-body').val();
   var newtodo = new todo(todoInputTitle, todoInputBody);
-  console.log(newtodo)
   saveToLocalStorage(newtodo);
   createBox(newtodo);
   clearInputFields()
@@ -214,7 +220,6 @@ function deletetodo(e) {
 }
 
 function upvotetodo(e) {
-  console.log("upvoting");
   var key = findCardKey(e);
   var todo = findObjectByKeyInLocalStorage(key);
   todo.importance = todo.importance + 1;

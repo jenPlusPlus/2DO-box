@@ -240,6 +240,10 @@ font-weight: 700;
   display: initial;
 }
 
+.gray-out-todo {
+  background-color: #e5f3f2;
+}
+
 /* =================
    = MEDIA QUERIES =
    ================= */
