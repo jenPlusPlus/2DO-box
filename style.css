@@ -259,9 +259,14 @@ font-weight: 700;
   background-color: #e5f3f2;
 }
 
+.mark-completed-text {
+  padding-left: 5px;
+}
+
 .todo-box-pic-importance {
   display: flex;
 }
+
 /* =================
    = MEDIA QUERIES =
    ================= */

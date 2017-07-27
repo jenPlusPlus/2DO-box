@@ -37,10 +37,8 @@ $('.bottom').prepend(`
       <div class="todo-box-pic-importance">
       <img class="todo-box-upvote-button icon" src="images/upvote.svg" alt="upvote button" tabindex="0"/>
       <img class="todo-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" tabindex="0"/>
-
       <p class="todo-box-quality" tabindex="0">Importance: <span class="todo-box-quality-value">swill</span></p>
-      </div>
-      <label><input type="checkbox" class="mark-as-completed" name="mark-as-completed" value="mark-as-completed">Mark as completed</label>
+      <label><input type="checkbox" class="mark-as-completed" name="mark-as-completed" value="mark-as-completed"><span class="mark-completed-text">Mark as completed</span></label>
     </div>
   </article>
   `);
