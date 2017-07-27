@@ -106,17 +106,18 @@ $('.bottom').prepend(`
   $('[data-id='+todo.id+']').on('click','.todo-box-downvote-button', downvotetodo);
   $('[data-id='+todo.id+']').on("blur", "h2", saveTitle);
   $('[data-id='+todo.id+']').on("blur", ".todo-box-text", saveBody);
-  $('.mark-as-completed').on('click', hideMarkedAsCompleted);
-  $('.show-completed').on('click', showCompletedTasks);
+  $('.mark-as-completed').on('click', updateMarkedAsCompleted);
 }
 
-function hideMarkedAsCompleted (e) {
+function updateMarkedAsCompleted (e) {
   var key = findCardKey(e);
   var todo = findObjectByKeyInLocalStorage(key);
-  if (todo.hidden === false) {
+  if (todo.completed === false && todo.hidden === false) {
     todo.hidden = true;
+    todo.completed = true;
   } else {
     todo.hidden = false;
+    todo.completed = false;
   };
   hideCardsOnDom(todo);
   saveToLocalStorage(todo);
@@ -125,13 +126,30 @@ function hideMarkedAsCompleted (e) {
 function hideCardsOnDom(todo){
   if (todo.hidden === true) {
     $('[data-id='+todo.id+']').toggleClass('hidden')
-  }
 }
 
-function showCompletedTasks () {
-  $('.hidden').each(function(){
-    $(this).addClass('not-hidden')
-  })
+$('.show-completed').on('click', showCompletedTasks);
+
+function showCompletedTasks(e) {
+  var indexCardArray = [];
+  var objectKeys = Object.keys(localStorage);
+  objectKeys.forEach(function (id) {
+    indexCardArray.push(JSON.parse(localStorage[id]));
+  });
+  indexCardArray.forEach(function(todo, i) {
+   if (todo.completed === true && todo.hidden === true) {
+     createBox(todo);
+     $('[data-id='+todo.id+']').find('.mark-as-completed').attr('checked', true);
+// NT if this works these variables will have to be renamed
+// can e be moved into if and make the whoel thing a function
+    todo.hidden = false;
+    saveToLocalStorage(todo);
+    //  $('.mark-as-completed').on('click', updateMarkedAsCompleted);
+
+// revisit this in the morning especiallt updateMarkedAsCompleted
+
+   }
+ });
 }
 
  function saveInput(e){
@@ -178,6 +196,7 @@ function showCompletedTasks () {
    this.body = body;
    this.importance = importance || 2;
    this.hidden = false;
+   this.completed = false;
  }
 
  function findObjectByKeyInLocalStorage(key) {
@@ -192,6 +211,10 @@ function runSearch(e) {
   objectKeys.forEach(function (id) {
     indexCardArray.push(JSON.parse(localStorage[id]));
   });
+
+///NT create index card array function
+/// rename variables of this function
+
   var search = $(this).val().toUpperCase();
   var searchedArray = indexCardArray.filter(function (newIndexCard) {
     return newIndexCard.title.toUpperCase().includes(search) || newIndexCard.body.toUpperCase().includes(search);
