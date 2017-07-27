@@ -52,9 +52,9 @@ $('.bottom').prepend(`
   $('[data-id='+todo.id+']').on('click', '.todo-box-delete-button', deletetodo);
   $('[data-id='+todo.id+']').on('click','.todo-box-upvote-button', upvotetodo);
   $('[data-id='+todo.id+']').on('click','.todo-box-downvote-button', downvotetodo);
-  $('[data-id='+todo.id+']').on("blur", "h2", saveTitle);
-  $('[data-id='+todo.id+']').on("blur", ".todo-box-text", saveBody);
-  $('.mark-as-completed').on('click', updateMarkedAsCompleted);
+  $('[data-id='+todo.id+']').on('blur', 'h2', saveTitle);
+  $('[data-id='+todo.id+']').on('blur', '.todo-box-text', saveBody);
+  $('[data-id='+todo.id+']').on('click', '.mark-as-completed', updateMarkedAsCompleted);
 }
 
 function updateMarkedAsCompleted (e) {
@@ -86,7 +86,7 @@ function showCompletedTasks(e) {
     cardArray.push(JSON.parse(localStorage[id]));
   });
   cardArray.forEach(function(todo, i) {
-   if (todo.completed === true && todo.hidden === true) {
+    if (todo.completed === true && todo.hidden === true) {
     createBox(todo);
     $('[data-id='+todo.id+']').find('.mark-as-completed').attr('checked', true);
     todo.hidden = false;
@@ -131,7 +131,11 @@ function focusOnTitle() {
 function populateDom() {
   var objectKeys = Object.keys(localStorage);
   objectKeys.forEach(function (uniqueId) {
-    createBox(JSON.parse(localStorage[uniqueId]));
+    if (JSON.parse(localStorage[uniqueId]).completed === false) {
+      createBox(JSON.parse(localStorage[uniqueId]))
+      JSON.parse(localStorage[uniqueId]).hidden = true;
+      saveToLocalStorage(JSON.parse(localStorage[uniqueId]))
+    };
   });
 }
 
