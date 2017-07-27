@@ -57,6 +57,7 @@ $('.todo-input-save-button').on('click', saveInput);
 
 // SEARCH BAR EVENT LISTENER
 $('.search-bar-input').on('keyup', runSearch);
+$('#importanceFilter').on('change', filterByImportance);
 
 function saveTitle(e) {
   e.preventDefault();
@@ -198,6 +199,27 @@ function runSearch(e) {
   $('.bottom').empty();
   for (var i = 0; i < searchedArray.length; i++) {
     createBox(searchedArray[i]);
+  }
+}
+
+function filterByImportance(e) {
+  var indexCardArray = [];
+  var objectKeys = Object.keys(localStorage);
+  objectKeys.forEach(function (id) {
+    indexCardArray.push(JSON.parse(localStorage[id]));
+  });
+  if($('#importanceFilter').val() == 5){
+    indexCardArray.forEach(function (task){
+      createBox(task);
+    });
+  }
+  else {
+    $('.bottom').empty();
+    indexCardArray.forEach(function (card){
+      if(card.importance == $('#importanceFilter').val()){
+        createBox(card);
+      }
+    });
   }
 }
 
