@@ -30,14 +30,14 @@ $('.bottom').prepend(`
   <article class="todo-box" data-id=${todo.id}>
     <div class="todo-box-top-line">
       <h2 class="todo-box-header" contenteditable=true>${todo.title}</h2>
-      <img class="todo-box-delete-button icon" src="images/delete.svg" alt="delete button" />
+      <img class="todo-box-delete-button icon" src="images/delete.svg" alt="delete button" tabindex="0"/>
     </div>
     <p class="todo-box-text" contenteditable=true>${todo.body}</p>
     <div class="todo-box-bottom-line">
-      <img class="todo-box-upvote-button icon" src="images/upvote.svg" alt="upvote button" />
-      <img class="todo-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" />
+      <img class="todo-box-upvote-button icon" src="images/upvote.svg" alt="upvote button" tabindex="0"/>
+      <img class="todo-box-downvote-button icon" src="images/downvote.svg" alt="downvote button" tabindex="0"/>
 
-      <p class="todo-box-quality">Importance: <span class="todo-box-quality-value">swill</span></p>
+      <p class="todo-box-quality" tabindex="0">Importance: <span class="todo-box-quality-value">swill</span></p>
       <label><input type="checkbox" class="mark-as-completed" name="mark-as-completed" value="mark-as-completed">Mark as completed</label>
     </div>
   </article>
@@ -97,7 +97,6 @@ function showCompletedTasks(e) {
 
 function saveInput(e){
   e.preventDefault();
-
   var todoInputTitle = $('.todo-input-title').val();
   var todoInputBody = $('.todo-input-body').val();
   var newtodo = new todo(todoInputTitle, todoInputBody);
