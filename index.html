@@ -17,11 +17,20 @@
           <input class= "todo-input-save-button" type="submit" value="save" disabled />
         </form>
       <button type="button" class="show-completed" name="show-completed">Show completed tasks</button>
-        <!-- add ac omment -->
+      <label>Filter by importance:
+        <select id="importanceFilter">
+          <option value="0">None</option>
+          <option value="1">Low</option>
+          <option value="2">Normal</option>
+          <option value="3">High</option>
+          <option value="4">Critical</option>
+          <option value="5" selected>All Tasks</option>
+        </select>
+      </label>
       </section>
       <section class="middle">
         <form class="search-bar">
-          <input class="search-bar-input" type="text" placeholder="Filter" />
+          <input class="search-bar-input" type="text" placeholder="Filter by content" />
         </form>
       </section>
       <section class="bottom">
